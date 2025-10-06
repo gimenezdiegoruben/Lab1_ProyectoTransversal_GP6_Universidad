@@ -11,11 +11,14 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 
-/**
- * @author Grupo 6 Gimenez Diego Ruben Carlos German Mecias Giacomelli Tomas
- * Migliozzi Badani Urbani Jose
- *
- */
+/** 
+    @author Grupo 6 
+    Gimenez Diego Ruben
+    Carlos German Mecias Giacomelli
+    Tomas Migliozzi Badani
+    Urbani Jose
+**/
+
 public class AlumnoData {
 
     private Connection con = null;
@@ -154,7 +157,7 @@ public class AlumnoData {
         }
     }
 
- public void eliminarAlumnoPorDni(int dni) {
+    public void eliminarAlumnoPorDni(int dni) {
         con = Conexion.getConexion();
         String sql = "UPDATE alumno SET estado = 0 WHERE dni = ?";
         try {
@@ -172,4 +175,3 @@ public class AlumnoData {
         }
     }
 }
-

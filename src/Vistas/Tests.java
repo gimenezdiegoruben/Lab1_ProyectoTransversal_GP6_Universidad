@@ -7,11 +7,14 @@ import java.sql.Connection;
 import java.time.LocalDate;
 import java.util.List;
 
-/**
- *
- * @author Grupo 6 Gimenez Diego Ruben Carlos German Mecias Giacomelli Tomas
- * Migliozzi Badani Urbani Jose
- */
+/** 
+    @author Grupo 6 
+    Gimenez Diego Ruben
+    Carlos German Mecias Giacomelli
+    Tomas Migliozzi Badani
+    Urbani Jose
+**/
+
 public class Tests {
 
    public static void main(String[] args) {
