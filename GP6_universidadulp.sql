@@ -18,10 +18,10 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `universidadulp`
+-- Base de datos: `gp6_universidadulp`
 --
-CREATE DATABASE IF NOT EXISTS `universidadulp` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
-USE `universidadulp`;
+CREATE DATABASE IF NOT EXISTS `gp6_universidadulp` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `gp6_universidadulp`;
 -- --------------------------------------------------------
 
 --
