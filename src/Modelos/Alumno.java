@@ -7,6 +7,7 @@ import java.time.LocalDate;
     Gimenez Diego Ruben
     Carlos German Mecias Giacomelli
     Tomas Migliozzi Badani
+    Urbani Jose
 **/
 
 public class Alumno {
