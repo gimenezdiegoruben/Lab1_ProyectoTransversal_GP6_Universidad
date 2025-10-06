@@ -7,11 +7,13 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
-/** 
+/**  
+ * 
     @author Grupo 6 
     Gimenez Diego Ruben
     Carlos German Mecias Giacomelli
     Tomas Migliozzi Badani
+    Urbani Jose
 **/
 public class Conexion {
 
