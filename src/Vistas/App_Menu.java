@@ -1,12 +1,9 @@
 package Vistas;
 
-/** 
-    @author Grupo 6 
-    Gimenez Diego Ruben
-    Carlos German Mecias Giacomelli
-    Tomas Migliozzi Badani
-    Urbani Jose
-**/
+/**
+ *
+ * @author 
+ */
 public class App_Menu extends javax.swing.JFrame {
 
     /**
@@ -25,17 +22,57 @@ public class App_Menu extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jMenu3 = new javax.swing.JMenu();
+        jFondo = new javax.swing.JDesktopPane();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jmAlumno = new javax.swing.JMenu();
+        jmiFormularioAlumno = new javax.swing.JMenuItem();
+        jMenu4 = new javax.swing.JMenu();
+        jmSalir = new javax.swing.JMenu();
+
+        jMenu3.setText("jMenu3");
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jFondo.setPreferredSize(new java.awt.Dimension(1080, 640));
+
+        javax.swing.GroupLayout jFondoLayout = new javax.swing.GroupLayout(jFondo);
+        jFondo.setLayout(jFondoLayout);
+        jFondoLayout.setHorizontalGroup(
+            jFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1050, Short.MAX_VALUE)
+        );
+        jFondoLayout.setVerticalGroup(
+            jFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 600, Short.MAX_VALUE)
+        );
+
+        jmAlumno.setText("Alumno");
+
+        jmiFormularioAlumno.setText("Formulario de Alumno");
+        jmAlumno.add(jmiFormularioAlumno);
+
+        jMenuBar1.add(jmAlumno);
+
+        jMenu4.setText("               ");
+        jMenuBar1.add(jMenu4);
+
+        jmSalir.setText("Salir");
+        jMenuBar1.add(jmSalir);
+
+        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jFondo, javax.swing.GroupLayout.PREFERRED_SIZE, 1050, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addComponent(jFondo, javax.swing.GroupLayout.PREFERRED_SIZE, 600, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -68,6 +105,12 @@ public class App_Menu extends javax.swing.JFrame {
         }
         //</editor-fold>
         //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -78,5 +121,12 @@ public class App_Menu extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    public javax.swing.JDesktopPane jFondo;
+    private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenu jMenu4;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenu jmAlumno;
+    public javax.swing.JMenu jmSalir;
+    public javax.swing.JMenuItem jmiFormularioAlumno;
     // End of variables declaration//GEN-END:variables
 }

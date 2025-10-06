@@ -11,14 +11,11 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 
-/** 
-    @author Grupo 6 
-    Gimenez Diego Ruben
-    Carlos German Mecias Giacomelli
-    Tomas Migliozzi Badani
-    Urbani Jose
-**/
-
+/**
+ * @author Grupo 6 Gimenez Diego Ruben Carlos German Mecias Giacomelli Tomas
+ * Migliozzi Badani Urbani Jose
+ *
+ */
 public class AlumnoData {
 
     private Connection con = null;
@@ -156,4 +153,23 @@ public class AlumnoData {
             JOptionPane.showMessageDialog(null, "Error al borrar alumno. No se puede acceder a la tabla Alumno");
         }
     }
+
+ public void eliminarAlumnoPorDni(int dni) {
+        con = Conexion.getConexion();
+        String sql = "UPDATE alumno SET estado = 0 WHERE dni = ?";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, dni);
+            int filasAfectadas = ps.executeUpdate();
+
+            if (filasAfectadas > 0) {
+                JOptionPane.showMessageDialog(null, "Se eliminó  el alumno con DNI: " + dni + " (baja lógica)");
+            } else {
+                System.out.println("No se encontró el alumno con DNI: " + dni + " para dar de baja.");
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al borrar alumno. No se puede acceder a la tabla Alumno");
+        }
+    }
 }
+
