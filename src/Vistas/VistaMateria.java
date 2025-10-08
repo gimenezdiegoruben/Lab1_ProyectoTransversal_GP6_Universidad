@@ -93,6 +93,11 @@ public class VistaMateria extends javax.swing.JInternalFrame {
         jbtEliminar.setText("Eliminar");
         jbtEliminar.setEnabled(false);
         jbtEliminar.setPreferredSize(new java.awt.Dimension(145, 57));
+        jbtEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtEliminarActionPerformed(evt);
+            }
+        });
 
         jbtGuardar.setFont(new java.awt.Font("Dialog", 1, 15)); // NOI18N
         jbtGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/icon_guardar.png"))); // NOI18N
@@ -226,21 +231,27 @@ public class VistaMateria extends javax.swing.JInternalFrame {
                     Materia m1 = new Materia(Integer.parseInt(jtxCodigo.getText().trim()), jtxNombre.getText().trim(), Integer.parseInt(jtxAño.getText().trim()), jchEstado.isSelected());
                     Materia m2 = materiaData.buscarMateria(Integer.parseInt(jtxCodigo.getText().trim()));
                     materiaData.modificarMateria(m1);
-                    JOptionPane.showMessageDialog(this, "La materia " + m2.getNombre() + " " +  m2.getAnioMateria() + (m2.isEstado() ? " Activo" : " Inactivo")
-                                                  + " ha sido modificada a: " + m1.getNombre() + " " + m1.getAnioMateria() + (m2.isEstado() ? " Activo" : " Inactivo"));
+                    JOptionPane.showMessageDialog(this, "La materia " + m2.getNombre() + " " + m2.getAnioMateria() + (m2.isEstado() ? " Activo" : " Inactivo")
+                            + " ha sido modificada a: " + m1.getNombre() + " " + m1.getAnioMateria() + (m2.isEstado() ? " Activo" : " Inactivo"));
                     buscar = false;
+                    limpiarCampos();
+                    jbtEliminar.setEnabled(false);
                 } else {
                     Materia m1 = new Materia(Integer.parseInt(jtxCodigo.getText().trim()), jtxNombre.getText().trim(), Integer.parseInt(jtxAño.getText().trim()), activo);
                     List<Materia> listaMaterias = materiaData.listarMaterias();
                     for (Materia aux : listaMaterias) {
                         if (aux.getNombre().equals(m1.getNombre()) && aux.getAnioMateria() == m1.getAnioMateria()) {
                             JOptionPane.showMessageDialog(this, "La materia que intentas guardar ya ha sido creada anteriormente", "Materia repetida", JOptionPane.ERROR_MESSAGE);
+                            limpiarCampos();
+                            jbtEliminar.setEnabled(false);
                             repetido = true;
                         }
                     }
                     if (!repetido) {
                         materiaData.guardarMateria(m1);
                         JOptionPane.showMessageDialog(this, m1.getNombre() + " " + m1.getAnioMateria() + " añadida exitosamente", "Válido", JOptionPane.INFORMATION_MESSAGE);
+                        limpiarCampos();
+                        jbtEliminar.setEnabled(false);
                     }
                 }
             } catch (NumberFormatException ex) {
@@ -253,24 +264,44 @@ public class VistaMateria extends javax.swing.JInternalFrame {
         MateriaData materiaData = new MateriaData();
         try {
             int id = Integer.parseInt(jtxCodigo.getText().trim());
-        Materia m1 = materiaData.buscarMateria(id);
-        if (m1 != null) {
-            buscar = true;
-            jtxCodigo.setText(String.valueOf(m1.getIdMateria()));
-            jtxNombre.setText(m1.getNombre());
-            jtxAño.setText(String.valueOf(m1.getAnioMateria()));
-            if (m1.isEstado()) {
-                jchEstado.setEnabled(true);
-            } else {
-                jchEstado.setEnabled(false);
+            Materia m1 = materiaData.buscarMateria(id);
+            if (m1 != null) {
+                buscar = true;
+                jtxCodigo.setEditable(false);
+                jtxCodigo.setText(String.valueOf(m1.getIdMateria()));
+                jtxNombre.setText(m1.getNombre());
+                jtxAño.setText(String.valueOf(m1.getAnioMateria()));
+                if (m1.isEstado()) {
+                    jchEstado.setEnabled(true);
+                } else {
+                    jchEstado.setEnabled(false);
+                }
+                activarCampos();
+                jbtGuardar.setEnabled(true);
+                jbtEliminar.setEnabled(true);
             }
-            activarCampos();
-            jbtGuardar.setEnabled(true);
-        }
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(this, "Ingrese un número válido en el código", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jbtBuscarActionPerformed
+
+    private void jbtEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtEliminarActionPerformed
+        MateriaData materiaData = new MateriaData();
+        try {
+            int id = Integer.parseInt(jtxCodigo.getText().trim());
+            Materia m1 = materiaData.buscarMateria(id);
+            if (m1 != null) {
+                materiaData.eliminarMateria(id);
+                JOptionPane.showMessageDialog(this, "Materia " + m1.getNombre() + " " + m1.getAnioMateria() + " eliminada correctamente", "Válido", JOptionPane.INFORMATION_MESSAGE);
+                limpiarCampos();
+                jbtEliminar.setEnabled(false);
+                
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Ingrese un número válido en el campo Código", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+    }//GEN-LAST:event_jbtEliminarActionPerformed
 
     public void activarCampos() {
         jtxCodigo.setEditable(true);
