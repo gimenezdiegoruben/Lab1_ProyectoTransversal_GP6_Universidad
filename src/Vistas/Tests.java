@@ -79,5 +79,36 @@ public class Tests {
         System.out.println("Buscando alumno por DNI...");
         Alumno a2 = alumnoData.buscarAlumnoPorDni(46260667);
         System.out.println(a2.toString());
+        
+        // PRUEBAS DE MATERIA
+        System.out.println("\n**** Insertando Materias ****");
+
+        // Instanciamos MateriaData
+        MateriaData materiaData = new MateriaData();
+
+        // Usamos el constructor con idMateria
+        Materia materia1 = new Materia(0, "Lab Programación", 1, true); 
+        materiaData.guardarMateria(materia1);
+
+        Materia materia2 = new Materia(0, "Matemáticas", 2, true); 
+        materiaData.guardarMateria(materia2);
+
+        Materia materia3 = new Materia(0, "Base de datos", 1, false);
+        materiaData.guardarMateria(materia3);
+
+        // Listamos las materias insertadas
+        System.out.println("\n*** Listado Completo de Materias (Todas) ***");
+        List<Materia> listaMaterias = materiaData.listarMaterias();
+
+        if (listaMaterias.isEmpty()) {
+            System.out.println(" La bd no contiene materias.");
+        } else {
+            for (Materia materia : listaMaterias) {
+                System.out.println("ID: " + materia.getIdMateria()
+                        + " | Nombre: " + materia.getNombre()
+                        + " | Año: " + materia.getAnioMateria()
+                        + " | Estado: " + (materia.isEstado() ? "MATERIA ACTIVA" : "MATERIA INACTIVA"));
+            }
+        }
     }
 }

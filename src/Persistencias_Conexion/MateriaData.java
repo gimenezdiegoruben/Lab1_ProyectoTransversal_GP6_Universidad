@@ -33,7 +33,10 @@ public class MateriaData {
             statement.setString(1, materia.getNombre());
             statement.setInt(2, materia.getAnioMateria());
             statement.setBoolean(3, materia.isEstado());
-            statement.executeUpdate();
+            int filasAfectadas = statement.executeUpdate();
+            if (filasAfectadas > 0){
+                JOptionPane.showMessageDialog(null, "Materia " + materia.getNombre() + " añadida con éxito");
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
