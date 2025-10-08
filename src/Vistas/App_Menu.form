@@ -33,12 +33,12 @@
             <Property name="text" type="java.lang.String" value="Materias"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="jmiAgregarMateria">
+            <MenuItem class="javax.swing.JMenuItem" name="jmiFormularioMaterias">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Agregar materia"/>
+                <Property name="text" type="java.lang.String" value="Formulario de Materias"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jmiAgregarMateriaActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jmiFormularioMateriasActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>

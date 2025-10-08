@@ -32,7 +32,7 @@ public class App_Menu extends javax.swing.JFrame {
         jmAlumno = new javax.swing.JMenu();
         jmiFormularioAlumno = new javax.swing.JMenuItem();
         jmMaterias = new javax.swing.JMenu();
-        jmiAgregarMateria = new javax.swing.JMenuItem();
+        jmiFormularioMaterias = new javax.swing.JMenuItem();
         jmSalir = new javax.swing.JMenu();
 
         jMenu3.setText("jMenu3");
@@ -61,13 +61,13 @@ public class App_Menu extends javax.swing.JFrame {
 
         jmMaterias.setText("Materias");
 
-        jmiAgregarMateria.setText("Agregar materia");
-        jmiAgregarMateria.addActionListener(new java.awt.event.ActionListener() {
+        jmiFormularioMaterias.setText("Formulario de Materias");
+        jmiFormularioMaterias.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jmiAgregarMateriaActionPerformed(evt);
+                jmiFormularioMateriasActionPerformed(evt);
             }
         });
-        jmMaterias.add(jmiAgregarMateria);
+        jmMaterias.add(jmiFormularioMaterias);
 
         jMenuBar1.add(jmMaterias);
 
@@ -94,11 +94,11 @@ public class App_Menu extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jmiAgregarMateriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiAgregarMateriaActionPerformed
+    private void jmiFormularioMateriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiFormularioMateriasActionPerformed
         VistaMateria materia = new VistaMateria();
         jFondo.add(materia);
         materia.setVisible(true);
-    }//GEN-LAST:event_jmiAgregarMateriaActionPerformed
+    }//GEN-LAST:event_jmiFormularioMateriasActionPerformed
 
     /**
      * @param args the command line arguments
@@ -149,7 +149,7 @@ public class App_Menu extends javax.swing.JFrame {
     private javax.swing.JMenu jmAlumno;
     private javax.swing.JMenu jmMaterias;
     public javax.swing.JMenu jmSalir;
-    private javax.swing.JMenuItem jmiAgregarMateria;
     public javax.swing.JMenuItem jmiFormularioAlumno;
+    private javax.swing.JMenuItem jmiFormularioMaterias;
     // End of variables declaration//GEN-END:variables
 }
