@@ -1,26 +1,32 @@
 package Modelos;
 
-/**
- *
- * @author Grupo 6 
+/** 
+    @author Grupo 6 
     Gimenez Diego Ruben
     Carlos German Mecias Giacomelli
     Tomas Migliozzi Badani
     Urbani Jose
- */
+**/
+
 public class Materia {
     private int idMateria;
     private String nombre;
-    private int anio;
+    private int anioMateria;
     private boolean estado;
 
     public Materia() {
     }
 
-    public Materia(String nombre, int anio, boolean estado) {
-        this.idMateria = -1;
+    public Materia(int idMateria, String nombre, int anioMateria, boolean activo) {
+        this.idMateria = idMateria;
         this.nombre = nombre;
-        this.anio = anio;
+        this.anioMateria = anioMateria;
+        this.estado = activo;
+    }
+
+    public Materia(String nombre, int anioMateria, boolean estado) {
+        this.nombre = nombre;
+        this.anioMateria = anioMateria;
         this.estado = estado;
     }
 
@@ -40,12 +46,12 @@ public class Materia {
         this.nombre = nombre;
     }
 
-    public int getAnio() {
-        return anio;
+    public int getAnioMateria() {
+        return anioMateria;
     }
 
-    public void setAnio(int anio) {
-        this.anio = anio;
+    public void setAnioMateria(int anioMateria) {
+        this.anioMateria = anioMateria;
     }
 
     public boolean isEstado() {
@@ -56,11 +62,8 @@ public class Materia {
         this.estado = estado;
     }
 
-    @Override
+     @Override
     public String toString() {
-        return "Materia{" + "idMateria=" + idMateria + ", nombre=" + nombre + ", anio=" + anio + ", estado=" + estado + '}';
+        return "Materia{" + "idMateria=" + idMateria + ", nombre=" + nombre + ", anio=" + anioMateria + ", estado=" + estado + '}';
     }
-    
-    
-    
 }

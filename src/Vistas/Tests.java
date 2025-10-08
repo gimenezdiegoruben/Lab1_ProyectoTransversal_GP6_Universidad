@@ -1,8 +1,10 @@
 package Vistas;
 
 import Modelos.Alumno;
+import Modelos.Materia;
 import Persistencias_Conexion.AlumnoData;
 import Persistencias_Conexion.Conexion;
+import Persistencias_Conexion.MateriaData;
 import java.sql.Connection;
 import java.time.LocalDate;
 import java.util.List;
@@ -68,7 +70,7 @@ public class Tests {
         int dniParaEliminar = alumno4.getDni();
         alumnoData.eliminarAlumnoPorDni(dniParaEliminar);
 
-        System.out.println("\n*******Listado tras la Baja Lógica (el alumno con dni: " + dniParaEliminar + "ya no deberia estar en la bd) **********");
+        System.out.println("\n*******Listado tras la Baja Lógica (el alumno con dni: " + dniParaEliminar + " ya no deberia estar en la bd) **********");
         for (Alumno aux : alumnoData.listarAlumnos()) {
             System.out.println("ID: " + aux.getIdAlumno() + " | Nombre: " + aux.getNombre() + " " + aux.getApellido());
         }

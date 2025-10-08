@@ -38,7 +38,7 @@ public class Conexion {
                 
                 // Establece la conexión con BD
                 connection = DriverManager.getConnection(URL + DB, USUARIO ,PASSWORD);
-                JOptionPane.showMessageDialog(null, "Conexión exitosa a la base de datos.");
+                System.out.println("Conexion exitosa a la base de datos");
             }
         } catch (ClassNotFoundException ex) {
 

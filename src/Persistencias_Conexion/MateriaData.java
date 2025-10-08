@@ -31,7 +31,7 @@ public class MateriaData {
             String sql = "INSERT INTO materia (nombre, año, estado) VALUES (?, ?, ?)";
             PreparedStatement statement = conexion.prepareStatement(sql);
             statement.setString(1, materia.getNombre());
-            statement.setInt(2, materia.getAnio());
+            statement.setInt(2, materia.getAnioMateria());
             statement.setBoolean(3, materia.isEstado());
             statement.executeUpdate();
         } catch (SQLException e) {
@@ -50,6 +50,7 @@ public class MateriaData {
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 materia = new Materia(
+                        resultSet.getInt("idMateria"),
                         resultSet.getString("nombre"),
                         resultSet.getInt("año"),
                         resultSet.getBoolean("estado")
@@ -68,7 +69,7 @@ public class MateriaData {
             String sql = "UPDATE materia SET nombre = ?, año = ?, estado = ? WHERE idMateria = ?";
             PreparedStatement statement = conexion.prepareStatement(sql);
             statement.setString(1, materia.getNombre());
-            statement.setInt(2, materia.getAnio());
+            statement.setInt(2, materia.getAnioMateria());
             statement.setBoolean(3, materia.isEstado());
             statement.setInt(4, materia.getIdMateria());
             statement.executeUpdate();
@@ -105,6 +106,7 @@ public class MateriaData {
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 Materia materia = new Materia(
+                        resultSet.getInt("idMateria"),
                         resultSet.getString("nombre"),
                         resultSet.getInt("año"),
                         resultSet.getBoolean("estado")
