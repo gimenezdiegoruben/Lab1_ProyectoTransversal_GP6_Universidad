@@ -31,7 +31,8 @@ public class App_Menu extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jmAlumno = new javax.swing.JMenu();
         jmiFormularioAlumno = new javax.swing.JMenuItem();
-        jMenu4 = new javax.swing.JMenu();
+        jmMaterias = new javax.swing.JMenu();
+        jmiAgregarMateria = new javax.swing.JMenuItem();
         jmSalir = new javax.swing.JMenu();
 
         jMenu3.setText("jMenu3");
@@ -58,8 +59,17 @@ public class App_Menu extends javax.swing.JFrame {
 
         jMenuBar1.add(jmAlumno);
 
-        jMenu4.setText("               ");
-        jMenuBar1.add(jMenu4);
+        jmMaterias.setText("Materias");
+
+        jmiAgregarMateria.setText("Agregar materia");
+        jmiAgregarMateria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiAgregarMateriaActionPerformed(evt);
+            }
+        });
+        jmMaterias.add(jmiAgregarMateria);
+
+        jMenuBar1.add(jmMaterias);
 
         jmSalir.setText("Salir");
         jMenuBar1.add(jmSalir);
@@ -76,11 +86,19 @@ public class App_Menu extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jFondo, javax.swing.GroupLayout.PREFERRED_SIZE, 600, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jFondo, javax.swing.GroupLayout.PREFERRED_SIZE, 600, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jmiAgregarMateriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiAgregarMateriaActionPerformed
+        VistaMateria materia = new VistaMateria();
+        jFondo.add(materia);
+        materia.setVisible(true);
+    }//GEN-LAST:event_jmiAgregarMateriaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -127,10 +145,11 @@ public class App_Menu extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JDesktopPane jFondo;
     private javax.swing.JMenu jMenu3;
-    private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenu jmAlumno;
+    private javax.swing.JMenu jmMaterias;
     public javax.swing.JMenu jmSalir;
+    private javax.swing.JMenuItem jmiAgregarMateria;
     public javax.swing.JMenuItem jmiFormularioAlumno;
     // End of variables declaration//GEN-END:variables
 }
