@@ -8,7 +8,7 @@ import javax.swing.JOptionPane;
 /**
  * @author Grupo 6 Gimenez Diego Ruben Carlos German Mecias Giacomelli Tomas
  * Migliozzi Badani Urbani Jose
-*
+ *
  */
 public class VistaMateria extends javax.swing.JInternalFrame {
 
@@ -205,6 +205,7 @@ public class VistaMateria extends javax.swing.JInternalFrame {
         activarCampos();
         limpiarCampos();
         jbtGuardar.setEnabled(true);
+        buscar = false;
 
     }//GEN-LAST:event_jbtNuevoActionPerformed
 
@@ -219,34 +220,56 @@ public class VistaMateria extends javax.swing.JInternalFrame {
         if (jtxCodigo.getText().trim().isEmpty() || jtxNombre.getText().trim().isEmpty() || jtxAño.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Debe llenar todos los campos", "Error", JOptionPane.ERROR_MESSAGE);
         } else {
-        try {
-            MateriaData materiaData = new MateriaData();
-            if (buscar) {
-                Materia m1 = new Materia(Integer.parseInt(jtxCodigo.getText().trim()), jtxNombre.getText().trim(), Integer.parseInt(jtxAño.getText().trim()), activo);
-                materiaData.modificarMateria(m1);
-                buscar = false;
-            } else {
-                Materia m1 = new Materia(Integer.parseInt(jtxCodigo.getText().trim()), jtxNombre.getText().trim(), Integer.parseInt(jtxAño.getText().trim()), activo);
-                List<Materia> listaMaterias = materiaData.listarMaterias();
-                for (Materia aux : listaMaterias) {
-                    if (aux.getNombre().equals(m1.getNombre()) && aux.getAnioMateria() == m1.getAnioMateria()) {
-                        JOptionPane.showMessageDialog(this, "La materia que intentas guardar ya ha sido creada anteriormente", "Materia repetida", JOptionPane.ERROR_MESSAGE);
-                        repetido = true;
+            try {
+                MateriaData materiaData = new MateriaData();
+                if (buscar) {
+                    Materia m1 = new Materia(Integer.parseInt(jtxCodigo.getText().trim()), jtxNombre.getText().trim(), Integer.parseInt(jtxAño.getText().trim()), jchEstado.isSelected());
+                    Materia m2 = materiaData.buscarMateria(Integer.parseInt(jtxCodigo.getText().trim()));
+                    materiaData.modificarMateria(m1);
+                    JOptionPane.showMessageDialog(this, "La materia " + m2.getNombre() + " " +  m2.getAnioMateria() + (m2.isEstado() ? " Activo" : " Inactivo")
+                                                  + " ha sido modificada a: " + m1.getNombre() + " " + m1.getAnioMateria() + (m2.isEstado() ? " Activo" : " Inactivo"));
+                    buscar = false;
+                } else {
+                    Materia m1 = new Materia(Integer.parseInt(jtxCodigo.getText().trim()), jtxNombre.getText().trim(), Integer.parseInt(jtxAño.getText().trim()), activo);
+                    List<Materia> listaMaterias = materiaData.listarMaterias();
+                    for (Materia aux : listaMaterias) {
+                        if (aux.getNombre().equals(m1.getNombre()) && aux.getAnioMateria() == m1.getAnioMateria()) {
+                            JOptionPane.showMessageDialog(this, "La materia que intentas guardar ya ha sido creada anteriormente", "Materia repetida", JOptionPane.ERROR_MESSAGE);
+                            repetido = true;
+                        }
+                    }
+                    if (!repetido) {
+                        materiaData.guardarMateria(m1);
+                        JOptionPane.showMessageDialog(this, m1.getNombre() + " " + m1.getAnioMateria() + " añadida exitosamente", "Válido", JOptionPane.INFORMATION_MESSAGE);
                     }
                 }
-                if (!repetido) {
-                    materiaData.guardarMateria(m1);
-                    JOptionPane.showMessageDialog(this, m1.getNombre() + " " + m1.getAnioMateria() + " añadida exitosamente", "Válido", JOptionPane.INFORMATION_MESSAGE);
-                }
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(this, "Debe ingresar un número en los campos Código y Año", "Error", JOptionPane.ERROR_MESSAGE);
             }
-        } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(this, "Debe ingresar un número en los campos Código y Año", "Error", JOptionPane.ERROR_MESSAGE);
-        }
         }
     }//GEN-LAST:event_jbtGuardarActionPerformed
 
     private void jbtBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtBuscarActionPerformed
-        buscar = true;
+        MateriaData materiaData = new MateriaData();
+        try {
+            int id = Integer.parseInt(jtxCodigo.getText().trim());
+        Materia m1 = materiaData.buscarMateria(id);
+        if (m1 != null) {
+            buscar = true;
+            jtxCodigo.setText(String.valueOf(m1.getIdMateria()));
+            jtxNombre.setText(m1.getNombre());
+            jtxAño.setText(String.valueOf(m1.getAnioMateria()));
+            if (m1.isEstado()) {
+                jchEstado.setEnabled(true);
+            } else {
+                jchEstado.setEnabled(false);
+            }
+            activarCampos();
+            jbtGuardar.setEnabled(true);
+        }
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Ingrese un número válido en el código", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_jbtBuscarActionPerformed
 
     public void activarCampos() {

@@ -58,6 +58,8 @@ public class MateriaData {
                         resultSet.getInt("año"),
                         resultSet.getBoolean("estado")
                 );
+            } else {
+                JOptionPane.showMessageDialog(null, "Ninguna materia corresponde al Código ingresado", "Error", JOptionPane.ERROR_MESSAGE);
             }
         } catch (SQLException e) {
             e.printStackTrace();
