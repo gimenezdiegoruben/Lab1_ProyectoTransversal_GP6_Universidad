@@ -114,9 +114,9 @@ public class ControladorMateria implements ActionListener, FocusListener, KeyLis
                     vista.jtxNombre.setText(m1.getNombre());
                     vista.jtxAño.setText(String.valueOf(m1.getAnioMateria()));
                     if (m1.isEstado()) {
-                        vista.jchEstado.setEnabled(true);
+                        vista.jchEstado.setSelected(true);
                     } else {
-                        vista.jchEstado.setEnabled(false);
+                        vista.jchEstado.setSelected(false);
                     }
                     activarCampos();
                     vista.jbtGuardar.setEnabled(true);
