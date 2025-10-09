@@ -43,7 +43,7 @@ CREATE TABLE `alumno` (
 
 CREATE TABLE `inscripcion` (
   `idInscripto` int(11) NOT NULL,
-  `nota` int(11) NOT NULL,
+  `nota` double(11) NOT NULL,
   `idAlumno` int(11) NOT NULL,
   `idMateria` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
