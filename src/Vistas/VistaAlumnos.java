@@ -47,6 +47,8 @@ public class VistaAlumnos extends javax.swing.JInternalFrame {
         jlEstado1 = new javax.swing.JLabel();
         jlinfoactivo = new javax.swing.JLabel();
 
+        setResizable(false);
+
         jlAlumno.setFont(new java.awt.Font("Times New Roman", 1, 36)); // NOI18N
         jlAlumno.setText("Alumno");
 

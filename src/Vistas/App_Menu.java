@@ -36,6 +36,11 @@ public class App_Menu extends javax.swing.JFrame {
         jmiFormularioAlumno = new javax.swing.JMenuItem();
         jmMaterias = new javax.swing.JMenu();
         jmiFormularioMaterias = new javax.swing.JMenuItem();
+        jmAdministracion = new javax.swing.JMenu();
+        jmiManejoInscripciones = new javax.swing.JMenuItem();
+        jmiManipulacionNotas = new javax.swing.JMenuItem();
+        jmConsultas = new javax.swing.JMenu();
+        jmiAlumnosPorMateria = new javax.swing.JMenuItem();
         jMenuEspaciador = new javax.swing.JMenu();
         jmSalir = new javax.swing.JMenu();
 
@@ -49,7 +54,7 @@ public class App_Menu extends javax.swing.JFrame {
         );
         jFondoLayout.setVerticalGroup(
             jFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 620, Short.MAX_VALUE)
+            .addGap(0, 621, Short.MAX_VALUE)
         );
 
         jmAlumno.setText("Alumno");
@@ -65,6 +70,23 @@ public class App_Menu extends javax.swing.JFrame {
         jmMaterias.add(jmiFormularioMaterias);
 
         jMenuBar1.add(jmMaterias);
+
+        jmAdministracion.setText("Administración");
+
+        jmiManejoInscripciones.setText("Manejo de Inscripciones");
+        jmAdministracion.add(jmiManejoInscripciones);
+
+        jmiManipulacionNotas.setText("Manipulacion de notas");
+        jmAdministracion.add(jmiManipulacionNotas);
+
+        jMenuBar1.add(jmAdministracion);
+
+        jmConsultas.setText("Consultas");
+
+        jmiAlumnosPorMateria.setText("Alumnos por Materia");
+        jmConsultas.add(jmiAlumnosPorMateria);
+
+        jMenuBar1.add(jmConsultas);
 
         jMenuEspaciador.setText("                      ");
         jMenuEspaciador.setContentAreaFilled(false);
@@ -132,10 +154,15 @@ public class App_Menu extends javax.swing.JFrame {
     public javax.swing.JDesktopPane jFondo;
     public javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenu jMenuEspaciador;
+    public javax.swing.JMenu jmAdministracion;
     public javax.swing.JMenu jmAlumno;
+    public javax.swing.JMenu jmConsultas;
     public javax.swing.JMenu jmMaterias;
     public javax.swing.JMenu jmSalir;
+    public javax.swing.JMenuItem jmiAlumnosPorMateria;
     public javax.swing.JMenuItem jmiFormularioAlumno;
     public javax.swing.JMenuItem jmiFormularioMaterias;
+    public javax.swing.JMenuItem jmiManejoInscripciones;
+    public javax.swing.JMenuItem jmiManipulacionNotas;
     // End of variables declaration//GEN-END:variables
 }
