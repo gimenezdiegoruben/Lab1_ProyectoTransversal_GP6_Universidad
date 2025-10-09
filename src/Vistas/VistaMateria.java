@@ -12,15 +12,11 @@ import javax.swing.JOptionPane;
  */
 public class VistaMateria extends javax.swing.JInternalFrame {
 
-    private boolean buscar = false;
-
     /**
      * Creates new form VistaMateria
      */
     public VistaMateria() {
         initComponents();
-        desactivarCampos();
-        jtxCodigo.setEditable(true);
     }
 
     /**
@@ -60,11 +56,6 @@ public class VistaMateria extends javax.swing.JInternalFrame {
         jbtBuscar.setFont(new java.awt.Font("Dialog", 1, 15)); // NOI18N
         jbtBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/icon_buscar.png"))); // NOI18N
         jbtBuscar.setText("Buscar");
-        jbtBuscar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtBuscarActionPerformed(evt);
-            }
-        });
 
         jLabel3.setFont(new java.awt.Font("Dialog", 1, 15)); // NOI18N
         jLabel3.setText("Nombre:");
@@ -82,32 +73,17 @@ public class VistaMateria extends javax.swing.JInternalFrame {
         jbtNuevo.setMaximumSize(new java.awt.Dimension(145, 57));
         jbtNuevo.setMinimumSize(new java.awt.Dimension(145, 57));
         jbtNuevo.setPreferredSize(new java.awt.Dimension(145, 57));
-        jbtNuevo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtNuevoActionPerformed(evt);
-            }
-        });
 
         jbtEliminar.setFont(new java.awt.Font("Dialog", 1, 15)); // NOI18N
         jbtEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/icon_eliminar.png"))); // NOI18N
         jbtEliminar.setText("Eliminar");
         jbtEliminar.setEnabled(false);
         jbtEliminar.setPreferredSize(new java.awt.Dimension(145, 57));
-        jbtEliminar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtEliminarActionPerformed(evt);
-            }
-        });
 
         jbtGuardar.setFont(new java.awt.Font("Dialog", 1, 15)); // NOI18N
         jbtGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/icon_guardar.png"))); // NOI18N
         jbtGuardar.setText("Guardar");
         jbtGuardar.setEnabled(false);
-        jbtGuardar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtGuardarActionPerformed(evt);
-            }
-        });
 
         jLabel5.setFont(new java.awt.Font("Dialog", 1, 15)); // NOI18N
         jLabel5.setText("Estado:");
@@ -117,11 +93,6 @@ public class VistaMateria extends javax.swing.JInternalFrame {
         jbtSalir.setText("Salir");
         jbtSalir.setMaximumSize(new java.awt.Dimension(145, 57));
         jbtSalir.setMinimumSize(new java.awt.Dimension(145, 57));
-        jbtSalir.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtSalirActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -180,11 +151,12 @@ public class VistaMateria extends javax.swing.JInternalFrame {
                     .addComponent(jLabel3)
                     .addComponent(jtxNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(jtxAño, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5)
-                    .addComponent(jchEstado))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jchEstado, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel4)
+                        .addComponent(jtxAño, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel5)))
                 .addGap(33, 33, 33)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbtNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -201,128 +173,6 @@ public class VistaMateria extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jbtSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtSalirActionPerformed
-        this.dispose();
-    }//GEN-LAST:event_jbtSalirActionPerformed
-
-    private void jbtNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtNuevoActionPerformed
-        activarCampos();
-        limpiarCampos();
-        jbtGuardar.setEnabled(true);
-        buscar = false;
-
-    }//GEN-LAST:event_jbtNuevoActionPerformed
-
-    private void jbtGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtGuardarActionPerformed
-        boolean activo;
-        boolean repetido = false;
-        if (jchEstado.isSelected()) {
-            activo = true;
-        } else {
-            activo = false;
-        }
-        if (jtxCodigo.getText().trim().isEmpty() || jtxNombre.getText().trim().isEmpty() || jtxAño.getText().trim().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Debe llenar todos los campos", "Error", JOptionPane.ERROR_MESSAGE);
-        } else {
-            try {
-                MateriaData materiaData = new MateriaData();
-                if (buscar) {
-                    Materia m1 = new Materia(Integer.parseInt(jtxCodigo.getText().trim()), jtxNombre.getText().trim(), Integer.parseInt(jtxAño.getText().trim()), jchEstado.isSelected());
-                    Materia m2 = materiaData.buscarMateria(Integer.parseInt(jtxCodigo.getText().trim()));
-                    materiaData.modificarMateria(m1);
-                    JOptionPane.showMessageDialog(this, "La materia " + m2.getNombre() + " " + m2.getAnioMateria() + (m2.isEstado() ? " Activo" : " Inactivo")
-                            + " ha sido modificada a: " + m1.getNombre() + " " + m1.getAnioMateria() + (m2.isEstado() ? " Activo" : " Inactivo"));
-                    buscar = false;
-                    limpiarCampos();
-                    jbtEliminar.setEnabled(false);
-                } else {
-                    Materia m1 = new Materia(Integer.parseInt(jtxCodigo.getText().trim()), jtxNombre.getText().trim(), Integer.parseInt(jtxAño.getText().trim()), activo);
-                    List<Materia> listaMaterias = materiaData.listarMaterias();
-                    for (Materia aux : listaMaterias) {
-                        if (aux.getNombre().equals(m1.getNombre()) && aux.getAnioMateria() == m1.getAnioMateria()) {
-                            JOptionPane.showMessageDialog(this, "La materia que intentas guardar ya ha sido creada anteriormente", "Materia repetida", JOptionPane.ERROR_MESSAGE);
-                            limpiarCampos();
-                            jbtEliminar.setEnabled(false);
-                            repetido = true;
-                        }
-                    }
-                    if (!repetido) {
-                        materiaData.guardarMateria(m1);
-                        JOptionPane.showMessageDialog(this, m1.getNombre() + " " + m1.getAnioMateria() + " añadida exitosamente", "Válido", JOptionPane.INFORMATION_MESSAGE);
-                        limpiarCampos();
-                        jbtEliminar.setEnabled(false);
-                    }
-                }
-            } catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(this, "Debe ingresar un número en los campos Código y Año", "Error", JOptionPane.ERROR_MESSAGE);
-            }
-        }
-    }//GEN-LAST:event_jbtGuardarActionPerformed
-
-    private void jbtBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtBuscarActionPerformed
-        MateriaData materiaData = new MateriaData();
-        try {
-            int id = Integer.parseInt(jtxCodigo.getText().trim());
-            Materia m1 = materiaData.buscarMateria(id);
-            if (m1 != null) {
-                buscar = true;
-                jtxCodigo.setEditable(false);
-                jtxCodigo.setText(String.valueOf(m1.getIdMateria()));
-                jtxNombre.setText(m1.getNombre());
-                jtxAño.setText(String.valueOf(m1.getAnioMateria()));
-                if (m1.isEstado()) {
-                    jchEstado.setEnabled(true);
-                } else {
-                    jchEstado.setEnabled(false);
-                }
-                activarCampos();
-                jbtGuardar.setEnabled(true);
-                jbtEliminar.setEnabled(true);
-            }
-        } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(this, "Ingrese un número válido en el código", "Error", JOptionPane.ERROR_MESSAGE);
-        }
-    }//GEN-LAST:event_jbtBuscarActionPerformed
-
-    private void jbtEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtEliminarActionPerformed
-        MateriaData materiaData = new MateriaData();
-        try {
-            int id = Integer.parseInt(jtxCodigo.getText().trim());
-            Materia m1 = materiaData.buscarMateria(id);
-            if (m1 != null) {
-                materiaData.eliminarMateria(id);
-                JOptionPane.showMessageDialog(this, "Materia " + m1.getNombre() + " " + m1.getAnioMateria() + " eliminada correctamente", "Válido", JOptionPane.INFORMATION_MESSAGE);
-                limpiarCampos();
-                jbtEliminar.setEnabled(false);
-                
-            }
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Ingrese un número válido en el campo Código", "Error", JOptionPane.ERROR_MESSAGE);
-        }
-
-    }//GEN-LAST:event_jbtEliminarActionPerformed
-
-    public void activarCampos() {
-        jtxCodigo.setEditable(true);
-        jtxNombre.setEditable(true);
-        jtxAño.setEditable(true);
-        jchEstado.setEnabled(true);
-    }
-
-    public void desactivarCampos() {
-        jtxCodigo.setEditable(false);
-        jtxNombre.setEditable(false);
-        jtxAño.setEditable(false);
-        jchEstado.setEnabled(false);
-    }
-
-    public void limpiarCampos() {
-        jtxCodigo.setText("");
-        jtxNombre.setText("");
-        jtxAño.setText("");
-        jchEstado.setSelected(false);
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;

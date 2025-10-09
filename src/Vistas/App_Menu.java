@@ -8,13 +8,17 @@ package Vistas;
     Urbani Jose
 **/
 
+import javax.swing.ImageIcon;
+
 public class App_Menu extends javax.swing.JFrame {
 
-    /**
+     /**
      * Creates new form App_Menu
      */
     public App_Menu() {
         initComponents();
+        //System.out.println("");
+        setIconImage(new ImageIcon(getClass().getResource("/Images/logoULP.png")).getImage()); // logo de la esquina para la vista App_Menu
     }
 
     /**
@@ -26,30 +30,26 @@ public class App_Menu extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jMenu3 = new javax.swing.JMenu();
         jFondo = new javax.swing.JDesktopPane();
         jMenuBar1 = new javax.swing.JMenuBar();
         jmAlumno = new javax.swing.JMenu();
         jmiFormularioAlumno = new javax.swing.JMenuItem();
         jmMaterias = new javax.swing.JMenu();
         jmiFormularioMaterias = new javax.swing.JMenuItem();
+        jMenuEspaciador = new javax.swing.JMenu();
         jmSalir = new javax.swing.JMenu();
 
-        jMenu3.setText("jMenu3");
-
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        jFondo.setPreferredSize(new java.awt.Dimension(1080, 640));
 
         javax.swing.GroupLayout jFondoLayout = new javax.swing.GroupLayout(jFondo);
         jFondo.setLayout(jFondoLayout);
         jFondoLayout.setHorizontalGroup(
             jFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1050, Short.MAX_VALUE)
+            .addGap(0, 1057, Short.MAX_VALUE)
         );
         jFondoLayout.setVerticalGroup(
             jFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 600, Short.MAX_VALUE)
+            .addGap(0, 620, Short.MAX_VALUE)
         );
 
         jmAlumno.setText("Alumno");
@@ -62,14 +62,14 @@ public class App_Menu extends javax.swing.JFrame {
         jmMaterias.setText("Materias");
 
         jmiFormularioMaterias.setText("Formulario de Materias");
-        jmiFormularioMaterias.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jmiFormularioMateriasActionPerformed(evt);
-            }
-        });
         jmMaterias.add(jmiFormularioMaterias);
 
         jMenuBar1.add(jmMaterias);
+
+        jMenuEspaciador.setText("                      ");
+        jMenuEspaciador.setContentAreaFilled(false);
+        jMenuEspaciador.setEnabled(false);
+        jMenuBar1.add(jMenuEspaciador);
 
         jmSalir.setText("Salir");
         jMenuBar1.add(jmSalir);
@@ -80,25 +80,15 @@ public class App_Menu extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jFondo, javax.swing.GroupLayout.PREFERRED_SIZE, 1050, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jFondo)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jFondo, javax.swing.GroupLayout.PREFERRED_SIZE, 600, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jFondo, javax.swing.GroupLayout.Alignment.TRAILING)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jmiFormularioMateriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiFormularioMateriasActionPerformed
-        VistaMateria materia = new VistaMateria();
-        jFondo.add(materia);
-        materia.setVisible(true);
-    }//GEN-LAST:event_jmiFormularioMateriasActionPerformed
 
     /**
      * @param args the command line arguments
@@ -129,10 +119,6 @@ public class App_Menu extends javax.swing.JFrame {
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -144,12 +130,12 @@ public class App_Menu extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JDesktopPane jFondo;
-    private javax.swing.JMenu jMenu3;
-    private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenu jmAlumno;
-    private javax.swing.JMenu jmMaterias;
+    public javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenu jMenuEspaciador;
+    public javax.swing.JMenu jmAlumno;
+    public javax.swing.JMenu jmMaterias;
     public javax.swing.JMenu jmSalir;
     public javax.swing.JMenuItem jmiFormularioAlumno;
-    private javax.swing.JMenuItem jmiFormularioMaterias;
+    public javax.swing.JMenuItem jmiFormularioMaterias;
     // End of variables declaration//GEN-END:variables
 }

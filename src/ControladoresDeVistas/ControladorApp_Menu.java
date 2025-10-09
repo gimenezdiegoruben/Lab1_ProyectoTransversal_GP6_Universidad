@@ -1,14 +1,20 @@
 package ControladoresDeVistas;
 
-import Persistencias_Conexion.AlumnoData;
-import Vistas.VistaAlumnos;
-import Vistas.App_Menu;
-
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
+import java.net.URL;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
+import Persistencias_Conexion.AlumnoData;
+import Persistencias_Conexion.MateriaData;
+import Vistas.VistaAlumnos;
+import Vistas.VistaMateria;
+import Vistas.App_Menu;
 
 /*  @author Grupo 6 
     Gimenez Diego Ruben
@@ -16,7 +22,6 @@ import javax.swing.event.MenuListener;
     Tomas Migliozzi Badani
     Urbani Jose
  */
-
 public class ControladorApp_Menu implements ActionListener, MenuListener, ComponentListener {
 
     private final App_Menu menu;
@@ -25,15 +30,19 @@ public class ControladorApp_Menu implements ActionListener, MenuListener, Compon
         this.menu = menu;
 
         this.menu.jmiFormularioAlumno.addActionListener(this);
+        this.menu.jmiFormularioMaterias.addActionListener(this);
+        // agregar las otras vistas aquí
 
-        // escucha a jMenu en los metodos menuSelected, MenuDeselected y menuCanceled
+// AddMenuListener escucha a jMenu en los metodos menuSelected, MenuDeselected y menuCanceled
         this.menu.jmSalir.addMenuListener(this);
+        this.menu.jFondo.addComponentListener(this);
     }
 
     public void iniciar() {
         menu.setTitle("Universidad de la Punta");
         menu.setLocationRelativeTo(null);
         menu.setResizable(false);
+        ponerFondo();
     }
 
     @Override
@@ -44,12 +53,52 @@ public class ControladorApp_Menu implements ActionListener, MenuListener, Compon
             ControladorAlumnos a = new ControladorAlumnos(vista, data, menu);
             a.iniciar();
         }
+        if (e.getSource() == menu.jmiFormularioMaterias) {
+            MateriaData data = new MateriaData();
+            VistaMateria vista = new VistaMateria();
+            ControladorMateria a = new ControladorMateria(vista, data, menu);
+            a.iniciar();
+        }
+         //if (e.getSource() == menu.jmiFormulario....) {aquí los formularios que faltan
+         //...
+    }
+
+    public void ponerFondo() {
+        ClassLoader directorio = getClass().getClassLoader();
+        URL rutaImagenFondo = directorio.getResource("Images/ULP.png");
+
+        // Crea un ImageIcon a partir de la imagen de fondo
+        ImageIcon imagenFondoIcon = new ImageIcon(rutaImagenFondo);
+
+        // Obtiene la imagen de fondo
+        Image imagenFondo = imagenFondoIcon.getImage();
+
+        // Redimensiona la imagen de fondo al tamaño del JPanel
+        imagenFondo = imagenFondo.getScaledInstance(menu.jFondo.getWidth(), menu.jFondo.getHeight(), Image.SCALE_SMOOTH);
+
+        // Crea un nuevo ImageIcon con la imagen redimensionada
+        ImageIcon imagenFondoRedimensionadaIcon = new ImageIcon(imagenFondo);
+
+        // Crea una etiqueta JLabel para mostrar la imagen de fondo en el JPanel
+        JLabel imagenFondoLabel = new JLabel(imagenFondoRedimensionadaIcon);
+
+        // Establece la ubicación y el tamaño de la imagen de fondo
+        imagenFondoLabel.setBounds(0, 0, menu.jFondo.getWidth(), menu.jFondo.getHeight());
+
+        // Agrega la imagen de fondo al JPanel
+        menu.jFondo.add(imagenFondoLabel);
+
+        // Asegúrate de que la imagen de fondo esté en la parte posterior para no ocultar otros componentes
+        menu.jFondo.setComponentZOrder(imagenFondoLabel, 0);
+
+        // Actualiza el JPanel para mostrar la imagen
+        menu.jFondo.revalidate();
+        menu.jFondo.repaint();
     }
 
     @Override
     public void menuSelected(MenuEvent e) {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        if (e.getSource() == menu.jmSalir) {
+        if (e.getSource() == menu.jmSalir) { //sale cuando el menu salir es seleccionado
             menu.dispose();
         }
     }
@@ -66,8 +115,8 @@ public class ControladorApp_Menu implements ActionListener, MenuListener, Compon
 
     // Métodos requeridos por COMPONENTLISTENER
     @Override
-    public void componentResized(java.awt.event.ComponentEvent e) {
-
+    public void componentResized(ComponentEvent e) {
+        ponerFondo();
     }
 
     @Override
