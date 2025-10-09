@@ -1,0 +1,7 @@
+Open Apaceh NetBeans
+
+Ctrl+Shift+O (open proyect) … 
+
+Shift+F11 (Clean and Build Project)
+
+(Shift+F6) or inicio/ run UniversidadULP.java 
