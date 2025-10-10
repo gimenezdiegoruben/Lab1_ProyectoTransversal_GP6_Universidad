@@ -46,6 +46,7 @@ public class VistaAlumnos extends javax.swing.JInternalFrame {
         jrbEstado = new javax.swing.JRadioButton();
         jlEstado1 = new javax.swing.JLabel();
         jlinfoactivo = new javax.swing.JLabel();
+        jlinfoinactivo1 = new javax.swing.JLabel();
 
         setResizable(false);
 
@@ -67,19 +68,26 @@ public class VistaAlumnos extends javax.swing.JInternalFrame {
         jlFechaDeNacimiento.setToolTipText("");
 
         jlinfoinactivo.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
-        jlinfoinactivo.setText("(desmarcado inactivo)");
+        jlinfoinactivo.setText("(desmarcado inactivo");
 
         jbtNuevo.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jbtNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/icon_nuevo_alumno.png"))); // NOI18N
         jbtNuevo.setText("Nuevo");
+        jbtNuevo.setIconTextGap(2);
+        jbtNuevo.setMargin(new java.awt.Insets(2, 6, 2, 6));
 
         jbtEliminar.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jbtEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/icon_eliminar.png"))); // NOI18N
         jbtEliminar.setText("Eliminar");
+        jbtEliminar.setAlignmentY(0.0F);
+        jbtEliminar.setIconTextGap(2);
+        jbtEliminar.setMargin(new java.awt.Insets(6, 6, 6, 6));
 
         jbtGuardar.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jbtGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/icon_guardar.png"))); // NOI18N
         jbtGuardar.setText("Guardar");
+        jbtGuardar.setIconTextGap(2);
+        jbtGuardar.setMargin(new java.awt.Insets(2, 6, 2, 6));
 
         jbtSalir.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jbtSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/icon_salida.png"))); // NOI18N
@@ -99,6 +107,7 @@ public class VistaAlumnos extends javax.swing.JInternalFrame {
         jbtBuscar.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jbtBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/icon_buscar.png"))); // NOI18N
         jbtBuscar.setText("Buscar");
+        jbtBuscar.setMargin(new java.awt.Insets(2, 6, 3, 6));
         jbtBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtBuscarActionPerformed(evt);
@@ -111,6 +120,9 @@ public class VistaAlumnos extends javax.swing.JInternalFrame {
         jlinfoactivo.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         jlinfoactivo.setText("(marcado activo)");
 
+        jlinfoinactivo1.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        jlinfoinactivo1.setText("baja lógica)");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -118,6 +130,15 @@ public class VistaAlumnos extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(17, 17, 17)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(222, 222, 222)
+                        .addComponent(jlAlumno))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jbtNuevo)
+                        .addGap(20, 20, 20)
+                        .addComponent(jbtEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jbtGuardar))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -130,41 +151,36 @@ public class VistaAlumnos extends javax.swing.JInternalFrame {
                                     .addComponent(jlApellido))))
                         .addGap(46, 46, 46)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jtxNombre, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jdcFechadeNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jbtSalir)
                                 .addGroup(layout.createSequentialGroup()
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jdcFechadeNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jtxDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGap(35, 35, 35)
-                                    .addComponent(jbtBuscar))
-                                .addComponent(jtxApellido, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(47, 47, 47)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jlinfoactivo)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(17, 17, 17)
-                                        .addComponent(jlEstado1))))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(79, 79, 79)
-                                .addComponent(jrbEstado))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(39, 39, 39)
-                                .addComponent(jlinfoinactivo))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(222, 222, 222)
-                        .addComponent(jlAlumno))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jbtNuevo)
-                        .addGap(20, 20, 20)
-                        .addComponent(jbtEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jbtGuardar)
-                        .addGap(39, 39, 39)
-                        .addComponent(jbtSalir)))
-                .addContainerGap(19, Short.MAX_VALUE))
+                                        .addComponent(jtxNombre, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(jtxDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(jbtBuscar))
+                                            .addComponent(jtxApellido, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addGap(47, 47, 47)
+                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(jlinfoactivo)
+                                                .addGroup(layout.createSequentialGroup()
+                                                    .addGap(17, 17, 17)
+                                                    .addComponent(jlEstado1))))
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addGap(79, 79, 79)
+                                            .addComponent(jrbEstado))
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addGap(39, 39, 39)
+                                            .addComponent(jlinfoinactivo))
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addGap(67, 67, 67)
+                                            .addComponent(jlinfoinactivo1))))))))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -177,8 +193,7 @@ public class VistaAlumnos extends javax.swing.JInternalFrame {
                             .addComponent(jtxDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jlDocumento)
                             .addComponent(jbtBuscar))
-                        .addGap(114, 114, 114)
-                        .addComponent(jdcFechadeNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(136, 136, 136))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jlEstado1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -188,7 +203,9 @@ public class VistaAlumnos extends javax.swing.JInternalFrame {
                                 .addGap(7, 7, 7)
                                 .addComponent(jlinfoactivo)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jlinfoinactivo))
+                                .addComponent(jlinfoinactivo)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jlinfoinactivo1))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jlApellido)
@@ -197,15 +214,18 @@ public class VistaAlumnos extends javax.swing.JInternalFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jlNombre)
                                     .addComponent(jtxNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(25, 25, 25)
-                                .addComponent(jlFechaDeNacimiento)))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jbtNuevo)
-                    .addComponent(jbtEliminar)
-                    .addComponent(jbtGuardar)
-                    .addComponent(jbtSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                                .addGap(24, 24, 24)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jlFechaDeNacimiento)
+                                    .addComponent(jdcFechadeNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                .addGap(44, 44, 44)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jbtNuevo)
+                        .addComponent(jbtGuardar)
+                        .addComponent(jbtSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jbtEliminar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(9, Short.MAX_VALUE))
         );
 
         pack();
@@ -239,6 +259,7 @@ public class VistaAlumnos extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jlNombre;
     private javax.swing.JLabel jlinfoactivo;
     private javax.swing.JLabel jlinfoinactivo;
+    private javax.swing.JLabel jlinfoinactivo1;
     public javax.swing.JRadioButton jrbEstado;
     public javax.swing.JTextField jtxApellido;
     public javax.swing.JTextField jtxDocumento;
