@@ -67,6 +67,33 @@ public class MateriaData {
         cerrarConexion();
         return materia;
     }
+    
+    public Materia buscarMateriaPorNombre(String nombre) {
+    Materia materia = null;
+    try {
+        conexion = Conexion.getConexion();
+        // Buscamos por nombre, que es un dato que conocemos
+        String sql = "SELECT idMateria, nombre, año, estado FROM materia WHERE nombre = ?";
+        PreparedStatement statement = conexion.prepareStatement(sql);
+        statement.setString(1, nombre);
+        
+        ResultSet resultSet = statement.executeQuery();
+        
+        if (resultSet.next()) {
+            materia = new Materia(
+                resultSet.getInt("idMateria"),
+                resultSet.getString("nombre"),
+                resultSet.getInt("año"),
+                resultSet.getBoolean("estado")
+            );
+        } else {
+            System.out.println("No se encontró la materia con el nombre: " + nombre);
+        }
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(null, "Error al buscar materia: " + e.getMessage());
+    }
+    return materia;
+}
 
     public void modificarMateria(Materia materia) {
         try {

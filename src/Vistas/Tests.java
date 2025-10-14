@@ -1,9 +1,11 @@
 package Vistas;
 
 import Modelos.Alumno;
+import Modelos.Inscripcion;
 import Modelos.Materia;
 import Persistencias_Conexion.AlumnoData;
 import Persistencias_Conexion.Conexion;
+import Persistencias_Conexion.InscripcionData;
 import Persistencias_Conexion.MateriaData;
 import java.sql.Connection;
 import java.time.LocalDate;
@@ -21,7 +23,9 @@ public class Tests {
 
    public static void main(String[] args) {
 
-        // Test de Conexión
+       
+       
+        //********** Test de Conexión**********
         Connection con = Conexion.getConexion();
         if (con != null) {
             System.out.println("Conectado a la base de datos.");
@@ -80,7 +84,9 @@ public class Tests {
         Alumno a2 = alumnoData.buscarAlumnoPorDni(46260667);
         System.out.println(a2.toString());
         
-        // PRUEBAS DE MATERIA
+        
+        
+        //********* PRUEBAS DE MATERIA***********
         System.out.println("\n**** Insertando Materias ****");
 
         // Instanciamos MateriaData
@@ -110,5 +116,21 @@ public class Tests {
                         + " | Estado: " + (materia.isEstado() ? "MATERIA ACTIVA" : "MATERIA INACTIVA"));
             }
         }
+        
+        
+        //**********PRUEBAS DE INSCRIPCION**********
+        
+        
+        System.out.println("Insertamos inscripciones");
+        
+        InscripcionData inscripcionData= new InscripcionData();
+        Alumno alumnoParaInscripcion= alumnoData.buscarAlumnoPorDni(44309664);
+        Materia materiaParaInscripcion= materiaData.buscarMateriaPorNombre(materia2.getNombre());
+        //Inscribimos a German Mecias a la materia Matematicas
+        Inscripcion inscripcion= new Inscripcion(10.0, alumnoParaInscripcion, materiaParaInscripcion);
+        inscripcionData.guardarInscripcion(inscripcion);
+        
+        
+        
     }
 }

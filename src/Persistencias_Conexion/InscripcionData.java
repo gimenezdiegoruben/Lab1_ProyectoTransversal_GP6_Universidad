@@ -32,14 +32,14 @@ public class InscripcionData {
     public void guardarInscripcion(Inscripcion inscripcion){
         try {
             conexion= Conexion.getConexion();
-            String sql="INSERT INTO inscripcion ( nota, idAlumno, idMateria) VALUES (?,?,?,?)";
+            String sql="INSERT INTO inscripcion ( nota, idAlumno, idMateria) VALUES (?,?,?)";
             PreparedStatement statement = conexion.prepareStatement(sql);
             statement.setDouble(1, inscripcion.getNota());
             statement.setInt(2,inscripcion.getAlumno().getIdAlumno());
             statement.setInt(3, inscripcion.getMateria().getIdMateria());
             int filasAfectadas= statement.executeUpdate();
             if(filasAfectadas>0){
-                JOptionPane.showMessageDialog(null, "Se inscribio al alumno" + inscripcion.getAlumno().getNombre() + "a la materia" + inscripcion.getMateria().getNombre() + "correctamente!");
+                JOptionPane.showMessageDialog(null, "Se inscribio al alumno " + inscripcion.getAlumno().getNombre() + " a la materia " + inscripcion.getMateria().getNombre() + " correctamente!");
             }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al guardar inscripcion"+ ex);
