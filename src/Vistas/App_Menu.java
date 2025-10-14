@@ -17,7 +17,6 @@ public class App_Menu extends javax.swing.JFrame {
      */
     public App_Menu() {
         initComponents();
-        //System.out.println("");
         setIconImage(new ImageIcon(getClass().getResource("/Images/logoULP.png")).getImage()); // logo de la esquina para la vista App_Menu
     }
 
