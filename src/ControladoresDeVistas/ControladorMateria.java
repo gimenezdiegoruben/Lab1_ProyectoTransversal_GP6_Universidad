@@ -10,7 +10,10 @@ import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.List;
+import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 /*  @author Grupo 6 
     Gimenez Diego Ruben
@@ -18,7 +21,7 @@ import javax.swing.JOptionPane;
     Tomas Migliozzi Badani
     Urbani Jose
  */
-public class ControladorMateria implements ActionListener, FocusListener, KeyListener {
+public class ControladorMateria implements ActionListener, FocusListener, KeyListener, ListSelectionListener {
 
     private final VistaMateria vista;
     private final MateriaData data;
@@ -33,29 +36,40 @@ public class ControladorMateria implements ActionListener, FocusListener, KeyLis
         vista.jbtSalir.addActionListener(this);
         vista.jbtNuevo.addActionListener(this);
         vista.jbtGuardar.addActionListener(this);
-        vista.jbtBuscar.addActionListener(this);
+        /*vista.jbtBuscar.addActionListener(this);*/
         vista.jbtEliminar.addActionListener(this);
+        vista.jtxNombre.addKeyListener(this);
+        vista.jlNombres.addListSelectionListener(this);
+        /*vista.jcbNombreMateria.setEditable(true);
+        vista.jcbNombreMateria.getEditor().getEditorComponent().addKeyListener(this);*/
     }
 
     public void iniciar() {
         menu.jFondo.add(vista);
         vista.setVisible(true);
         menu.jFondo.moveToFront(vista);
-        vista.requestFocus(); 
+        vista.requestFocus();
+
+        desactivarCampos();
+        vista.jtxNombre.setEditable(true);
+        vista.jlNombres.setModel(new DefaultListModel<>());
+        /*vista.jcbNombreMateria.setEditable(true);
+        vista.jcbNombreMateria.removeAllItems();*/
     }
 
     @Override
     public void actionPerformed(java.awt.event.ActionEvent e) {
-        
+
         if (e.getSource() == vista.jbtSalir) {
             vista.dispose();
         }
-        
+
         if (e.getSource() == vista.jbtNuevo) {
             activarCampos();
             limpiarCampos();
             vista.jbtGuardar.setEnabled(true);
             buscar = false;
+            vista.jlNombres.setModel(new DefaultListModel<>());
         }
 
         if (e.getSource() == vista.jbtGuardar) {
@@ -101,10 +115,11 @@ public class ControladorMateria implements ActionListener, FocusListener, KeyLis
                     JOptionPane.showMessageDialog(null, "Debe ingresar un número en los campos Código y Año", "Error", JOptionPane.ERROR_MESSAGE);
                 }
             }
+            vista.jlNombres.setModel(new DefaultListModel<>());
         }
 
-        if (e.getSource() == vista.jbtBuscar) {
-            try {
+        /*if (e.getSource() == vista.jbtBuscar) {
+            /*try {
                 int id = Integer.parseInt(vista.jtxCodigo.getText().trim());
                 Materia m1 = data.buscarMateria(id);
                 if (m1 != null) {
@@ -125,7 +140,27 @@ public class ControladorMateria implements ActionListener, FocusListener, KeyLis
             } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(null, "Ingrese un número válido en el código", "Error", JOptionPane.ERROR_MESSAGE);
             }
-        }
+            String nombre = vista.jtxNombre.getText().trim();
+            Materia m1 = data.buscarMateriaPorNombre(nombre);
+            if (m1 != null) {
+                buscar = true;
+                vista.jtxNombre.setEditable(false);
+                vista.jtxNombre.setText(m1.getNombre());
+                vista.jtxCodigo.setText(String.valueOf(m1.getIdMateria()));
+                vista.jtxAño.setText(String.valueOf(m1.getAnioMateria()));
+                if (m1.isEstado()) {
+                    vista.jchEstado.setSelected(true);
+                } else {
+                    vista.jchEstado.setSelected(false);
+                }
+                activarCampos();
+                vista.jbtGuardar.setEnabled(true);
+                vista.jbtEliminar.setEnabled(true);
+            } else if (m1 == null) {
+                JOptionPane.showMessageDialog(null, "No hay ninguna materia registrada con el nombre ingresado", "Error", JOptionPane.ERROR_MESSAGE);
+                limpiarCampos();
+            }
+        }*/
 
         if (e.getSource() == vista.jbtEliminar) {
             try {
@@ -140,6 +175,7 @@ public class ControladorMateria implements ActionListener, FocusListener, KeyLis
             } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(null, "Ingrese un número válido en el campo Código", "Error", JOptionPane.ERROR_MESSAGE);
             }
+            vista.jlNombres.setModel(new DefaultListModel<>());
         }
     }
 
@@ -184,6 +220,61 @@ public class ControladorMateria implements ActionListener, FocusListener, KeyLis
 
     @Override
     public void keyReleased(KeyEvent e) {
+        /*if (e.getSource() == vista.jcbNombreMateria.getEditor().getEditorComponent()) {
+            List<Materia> listaMaterias = data.listarMaterias();
+            String textoIngresado = vista.jcbNombreMateria.getEditor().getItem().toString().trim().toLowerCase();
+            String nombre = textoIngresado.trim().toLowerCase();
+            vista.jcbNombreMateria.removeAllItems();
+            for (Materia aux : listaMaterias) {
+                if (aux.getNombre().contains(nombre)) {
+                    vista.jcbNombreMateria.addItem(aux.getNombre() + " " + aux.getAnioMateria());
+                }
+            }
+            
+            vista.jcbNombreMateria.getEditor().setItem(nombre);
+            
+            vista.jcbNombreMateria.showPopup();
+        }*/
+        if (e.getSource() == vista.jtxNombre) {
+            DefaultListModel<String> modelo = new DefaultListModel<>();
+            List<Materia> listaMaterias = data.listarMaterias();
+            String nombre = vista.jtxNombre.getText().toLowerCase();
+            for (Materia aux : listaMaterias) {
+                if (aux.getNombre().toLowerCase().contains(nombre)) {
+                    modelo.addElement(aux.getNombre() + " / " + aux.getAnioMateria());
+                }
+            }
+            vista.jlNombres.setModel(modelo);
+        }
+    }
+
+    @Override
+    public void valueChanged(ListSelectionEvent lse) {
+        if (!lse.getValueIsAdjusting()) {
+            String nombreseleccionado = vista.jlNombres.getSelectedValue();
+            if (nombreseleccionado != null) {
+                buscar = true;
+                List<Materia> listaMaterias = data.listarMaterias();
+                for (Materia aux : listaMaterias) {
+                    String nombreanio = aux.getNombre() + " / " + aux.getAnioMateria();
+                    if (nombreseleccionado.equalsIgnoreCase(nombreanio)) {
+                        vista.jtxNombre.setText(aux.getNombre());
+                        vista.jtxCodigo.setText(String.valueOf(aux.getIdMateria()));
+                        vista.jtxAño.setText(String.valueOf(aux.getAnioMateria()));
+                        if (aux.isEstado()) {
+                            vista.jchEstado.setSelected(true);
+                        } else {
+                            vista.jchEstado.setSelected(false);
+                        }
+                        activarCampos();
+                        vista.jbtGuardar.setEnabled(true);
+                        vista.jbtEliminar.setEnabled(true);
+                    }
+                }
+            } else {
+                limpiarCampos();
+            }
+        }
     }
 
 }
