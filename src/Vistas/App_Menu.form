@@ -77,9 +77,9 @@
             <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
           </AuxValues>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="jmiAlumnosPorMateria">
+            <MenuItem class="javax.swing.JMenuItem" name="jmiListarIncripciones">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Alumnos por Materia"/>
+                <Property name="text" type="java.lang.String" value="Listar  Incripciones"/>
               </Properties>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>

@@ -39,7 +39,7 @@ public class App_Menu extends javax.swing.JFrame {
         jmiManejoInscripciones = new javax.swing.JMenuItem();
         jmiManipulacionNotas = new javax.swing.JMenuItem();
         jmConsultas = new javax.swing.JMenu();
-        jmiAlumnosPorMateria = new javax.swing.JMenuItem();
+        jmiListarIncripciones = new javax.swing.JMenuItem();
         jMenuEspaciador = new javax.swing.JMenu();
         jmSalir = new javax.swing.JMenu();
 
@@ -82,8 +82,8 @@ public class App_Menu extends javax.swing.JFrame {
 
         jmConsultas.setText("Consultas");
 
-        jmiAlumnosPorMateria.setText("Alumnos por Materia");
-        jmConsultas.add(jmiAlumnosPorMateria);
+        jmiListarIncripciones.setText("Listar  Incripciones");
+        jmConsultas.add(jmiListarIncripciones);
 
         jMenuBar1.add(jmConsultas);
 
@@ -158,9 +158,9 @@ public class App_Menu extends javax.swing.JFrame {
     public javax.swing.JMenu jmConsultas;
     public javax.swing.JMenu jmMaterias;
     public javax.swing.JMenu jmSalir;
-    public javax.swing.JMenuItem jmiAlumnosPorMateria;
     public javax.swing.JMenuItem jmiFormularioAlumno;
     public javax.swing.JMenuItem jmiFormularioMaterias;
+    public javax.swing.JMenuItem jmiListarIncripciones;
     public javax.swing.JMenuItem jmiManejoInscripciones;
     public javax.swing.JMenuItem jmiManipulacionNotas;
     // End of variables declaration//GEN-END:variables
