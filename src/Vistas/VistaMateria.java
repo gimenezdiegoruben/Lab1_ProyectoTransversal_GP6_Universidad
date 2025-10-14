@@ -1,9 +1,5 @@
 package Vistas;
 
-import Modelos.Materia;
-import Persistencias_Conexion.MateriaData;
-import java.util.List;
-import javax.swing.JOptionPane;
 
 /**
  * @author Grupo 6 Gimenez Diego Ruben Carlos German Mecias Giacomelli Tomas
@@ -17,6 +13,7 @@ public class VistaMateria extends javax.swing.JInternalFrame {
      */
     public VistaMateria() {
         initComponents();
+        setTitle("Materias");
     }
 
     /**
