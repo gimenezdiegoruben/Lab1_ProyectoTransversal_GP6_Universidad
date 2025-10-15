@@ -28,6 +28,7 @@ public class ControladorMateria implements ActionListener, FocusListener, KeyLis
     private final App_Menu menu;
 
     private boolean buscar = false;
+    private boolean seleccion = false;
 
     public ControladorMateria(VistaMateria vista, MateriaData data, App_Menu menu) {
         this.vista = vista;
@@ -114,6 +115,9 @@ public class ControladorMateria implements ActionListener, FocusListener, KeyLis
                 } catch (NumberFormatException ex) {
                     JOptionPane.showMessageDialog(null, "Debe ingresar un número en los campos Código y Año", "Error", JOptionPane.ERROR_MESSAGE);
                 }
+                desactivarCampos();
+                vista.jtxNombre.setEditable(true);
+                vista.jlNombres.setModel(new DefaultListModel<>());
             }
             vista.jlNombres.setModel(new DefaultListModel<>());
         }
@@ -161,7 +165,6 @@ public class ControladorMateria implements ActionListener, FocusListener, KeyLis
                 limpiarCampos();
             }
         }*/
-
         if (e.getSource() == vista.jbtEliminar) {
             try {
                 int id = Integer.parseInt(vista.jtxCodigo.getText().trim());
@@ -253,6 +256,7 @@ public class ControladorMateria implements ActionListener, FocusListener, KeyLis
         if (!lse.getValueIsAdjusting()) {
             String nombreseleccionado = vista.jlNombres.getSelectedValue();
             if (nombreseleccionado != null) {
+                seleccion = true;
                 buscar = true;
                 List<Materia> listaMaterias = data.listarMaterias();
                 for (Materia aux : listaMaterias) {
@@ -271,9 +275,13 @@ public class ControladorMateria implements ActionListener, FocusListener, KeyLis
                         vista.jbtEliminar.setEnabled(true);
                     }
                 }
-            } else {
-                limpiarCampos();
+                seleccion = false;
+            }/*} else {
+                if (!seleccion) {
+                    limpiarCampos();
+                }
             }
+            seleccion = false;*/
         }
     }
 
