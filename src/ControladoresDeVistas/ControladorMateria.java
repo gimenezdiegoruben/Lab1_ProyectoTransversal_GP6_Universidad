@@ -28,6 +28,7 @@ public class ControladorMateria implements ActionListener, FocusListener, KeyLis
     private final App_Menu menu;
 
     private boolean buscar = false;
+    private boolean seleccion = false;
 
     public ControladorMateria(VistaMateria vista, MateriaData data, App_Menu menu) {
         this.vista = vista;
@@ -36,12 +37,10 @@ public class ControladorMateria implements ActionListener, FocusListener, KeyLis
         vista.jbtSalir.addActionListener(this);
         vista.jbtNuevo.addActionListener(this);
         vista.jbtGuardar.addActionListener(this);
-        /*vista.jbtBuscar.addActionListener(this);*/
         vista.jbtEliminar.addActionListener(this);
         vista.jtxNombre.addKeyListener(this);
         vista.jlNombres.addListSelectionListener(this);
-        /*vista.jcbNombreMateria.setEditable(true);
-        vista.jcbNombreMateria.getEditor().getEditorComponent().addKeyListener(this);*/
+       
     }
 
     public void iniciar() {
@@ -53,8 +52,6 @@ public class ControladorMateria implements ActionListener, FocusListener, KeyLis
         desactivarCampos();
         vista.jtxNombre.setEditable(true);
         vista.jlNombres.setModel(new DefaultListModel<>());
-        /*vista.jcbNombreMateria.setEditable(true);
-        vista.jcbNombreMateria.removeAllItems();*/
     }
 
     @Override
@@ -114,54 +111,13 @@ public class ControladorMateria implements ActionListener, FocusListener, KeyLis
                 } catch (NumberFormatException ex) {
                     JOptionPane.showMessageDialog(null, "Debe ingresar un número en los campos Código y Año", "Error", JOptionPane.ERROR_MESSAGE);
                 }
+                desactivarCampos();
+                vista.jtxNombre.setEditable(true);
+                vista.jlNombres.setModel(new DefaultListModel<>());
             }
             vista.jlNombres.setModel(new DefaultListModel<>());
         }
-
-        /*if (e.getSource() == vista.jbtBuscar) {
-            /*try {
-                int id = Integer.parseInt(vista.jtxCodigo.getText().trim());
-                Materia m1 = data.buscarMateria(id);
-                if (m1 != null) {
-                    buscar = true;
-                    vista.jtxCodigo.setEditable(false);
-                    vista.jtxCodigo.setText(String.valueOf(m1.getIdMateria()));
-                    vista.jtxNombre.setText(m1.getNombre());
-                    vista.jtxAño.setText(String.valueOf(m1.getAnioMateria()));
-                    if (m1.isEstado()) {
-                        vista.jchEstado.setSelected(true);
-                    } else {
-                        vista.jchEstado.setSelected(false);
-                    }
-                    activarCampos();
-                    vista.jbtGuardar.setEnabled(true);
-                    vista.jbtEliminar.setEnabled(true);
-                }
-            } catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(null, "Ingrese un número válido en el código", "Error", JOptionPane.ERROR_MESSAGE);
-            }
-            String nombre = vista.jtxNombre.getText().trim();
-            Materia m1 = data.buscarMateriaPorNombre(nombre);
-            if (m1 != null) {
-                buscar = true;
-                vista.jtxNombre.setEditable(false);
-                vista.jtxNombre.setText(m1.getNombre());
-                vista.jtxCodigo.setText(String.valueOf(m1.getIdMateria()));
-                vista.jtxAño.setText(String.valueOf(m1.getAnioMateria()));
-                if (m1.isEstado()) {
-                    vista.jchEstado.setSelected(true);
-                } else {
-                    vista.jchEstado.setSelected(false);
-                }
-                activarCampos();
-                vista.jbtGuardar.setEnabled(true);
-                vista.jbtEliminar.setEnabled(true);
-            } else if (m1 == null) {
-                JOptionPane.showMessageDialog(null, "No hay ninguna materia registrada con el nombre ingresado", "Error", JOptionPane.ERROR_MESSAGE);
-                limpiarCampos();
-            }
-        }*/
-
+        
         if (e.getSource() == vista.jbtEliminar) {
             try {
                 int id = Integer.parseInt(vista.jtxCodigo.getText().trim());
@@ -220,21 +176,7 @@ public class ControladorMateria implements ActionListener, FocusListener, KeyLis
 
     @Override
     public void keyReleased(KeyEvent e) {
-        /*if (e.getSource() == vista.jcbNombreMateria.getEditor().getEditorComponent()) {
-            List<Materia> listaMaterias = data.listarMaterias();
-            String textoIngresado = vista.jcbNombreMateria.getEditor().getItem().toString().trim().toLowerCase();
-            String nombre = textoIngresado.trim().toLowerCase();
-            vista.jcbNombreMateria.removeAllItems();
-            for (Materia aux : listaMaterias) {
-                if (aux.getNombre().contains(nombre)) {
-                    vista.jcbNombreMateria.addItem(aux.getNombre() + " " + aux.getAnioMateria());
-                }
-            }
-            
-            vista.jcbNombreMateria.getEditor().setItem(nombre);
-            
-            vista.jcbNombreMateria.showPopup();
-        }*/
+        
         if (e.getSource() == vista.jtxNombre) {
             DefaultListModel<String> modelo = new DefaultListModel<>();
             List<Materia> listaMaterias = data.listarMaterias();
@@ -250,9 +192,11 @@ public class ControladorMateria implements ActionListener, FocusListener, KeyLis
 
     @Override
     public void valueChanged(ListSelectionEvent lse) {
+        
         if (!lse.getValueIsAdjusting()) {
             String nombreseleccionado = vista.jlNombres.getSelectedValue();
             if (nombreseleccionado != null) {
+                seleccion = true;
                 buscar = true;
                 List<Materia> listaMaterias = data.listarMaterias();
                 for (Materia aux : listaMaterias) {
@@ -271,8 +215,7 @@ public class ControladorMateria implements ActionListener, FocusListener, KeyLis
                         vista.jbtEliminar.setEnabled(true);
                     }
                 }
-            } else {
-                limpiarCampos();
+                seleccion = false;
             }
         }
     }
