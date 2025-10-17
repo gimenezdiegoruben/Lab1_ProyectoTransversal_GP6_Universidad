@@ -15,6 +15,10 @@ import Persistencias_Conexion.MateriaData;
 import Vistas.VistaAlumnos;
 import Vistas.VistaMateria;
 import Vistas.App_Menu;
+import Vistas.VistaInscripcion;
+import Persistencias_Conexion.InscripcionData;
+import Vistas.VistaCargaNotas;
+import Vistas.VistaListarInscripciones;
 
 /*  @author Grupo 6 
     Gimenez Diego Ruben
@@ -31,9 +35,11 @@ public class ControladorApp_Menu implements ActionListener, MenuListener, Compon
 
         this.menu.jmiFormularioAlumno.addActionListener(this);
         this.menu.jmiFormularioMaterias.addActionListener(this);
-        // agregar las otras vistas aquí
+        this.menu.jmiManejoInscripciones.addActionListener(this);
+        this.menu.jmiManipulacionNotas.addActionListener(this);
+        this.menu.jmiListarIncripciones.addActionListener(this);
 
-// AddMenuListener escucha a jMenu en los metodos menuSelected, MenuDeselected y menuCanceled
+        // AddMenuListener escucha a jMenu en los metodos menuSelected, MenuDeselected y menuCanceled
         this.menu.jmSalir.addMenuListener(this);
         this.menu.jFondo.addComponentListener(this);
     }
@@ -59,8 +65,27 @@ public class ControladorApp_Menu implements ActionListener, MenuListener, Compon
             ControladorMateria a = new ControladorMateria(vista, data, menu);
             a.iniciar();
         }
-         //if (e.getSource() == menu.jmiFormulario....) {aquí los formularios que faltan
-         //...
+        if (e.getSource() == menu.jmiManejoInscripciones) {
+            AlumnoData adata = new AlumnoData();
+            InscripcionData idata = new InscripcionData();
+            VistaInscripcion vista = new VistaInscripcion();
+            ControladorInscripciones a = new ControladorInscripciones(vista, adata, idata, menu);
+            a.iniciar();
+        }
+        if (e.getSource() == menu.jmiManipulacionNotas) {
+            AlumnoData adata = new AlumnoData();
+            InscripcionData idata = new InscripcionData();
+            VistaCargaNotas vista = new VistaCargaNotas();
+            ControladorCargaNotas a = new ControladorCargaNotas(adata, idata, vista, menu);
+            a.inicia();
+        }
+        if (e.getSource() == menu.jmiListarIncripciones) {
+            MateriaData data = new MateriaData();
+            InscripcionData data1 = new InscripcionData();
+            VistaListarInscripciones vista = new VistaListarInscripciones();
+            ControladorListarInscripciones a = new ControladorListarInscripciones(data, data1, vista, menu);
+            a.inicia();
+        }
     }
 
     public void ponerFondo() {
