@@ -7,6 +7,8 @@ package Persistencias_Conexion;
 import Modelos.Alumno;
 import Modelos.Inscripcion;
 import Modelos.Materia;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -25,7 +27,8 @@ import javax.swing.JOptionPane;
  */
 public class InscripcionData {
     private Connection conexion;
-    
+    private MateriaData materiaData = new MateriaData();
+    private AlumnoData alumnoData = new AlumnoData();
     public InscripcionData(){
     }
     
@@ -57,11 +60,7 @@ public class InscripcionData {
             ResultSet resultSet= statement.executeQuery();
             if(resultSet.next()){
                 int idInscripcion= resultSet.getInt("idInscripcion");
-                int nota= resultSet.getInt("nota");
-                
-                AlumnoData alumnoData= new AlumnoData();
-                MateriaData materiaData=new MateriaData();
-                
+                double nota= resultSet.getDouble("nota");
                 Alumno alumno= alumnoData.buscarAlumnoPorDni(dniAlumno);
                 Materia materia= materiaData.buscarMateria(idMateria);
                 
@@ -74,11 +73,194 @@ public class InscripcionData {
         return inscripcion;
     }
     
-   // public void modificarInscripcion(Inscripcion inscripcion){}
     
-   // public void eliminarInscripcion(int id){}
-    
-   // public List<Inscripcion> listarInscripciones(){}
-    
-    
+    public List<Inscripcion> obtenerInscripciones(){
+    conexion= Conexion.getConexion();
+    ArrayList<Inscripcion> inscripciones= new ArrayList<>();
+    String sql = "SELECT * FROM inscripcion";      
+        try {
+            PreparedStatement ps= conexion.prepareStatement(sql);
+            ResultSet resultSet= ps.executeQuery();
+            
+            while(resultSet.next()){
+            Inscripcion inscripcion= new Inscripcion();
+            Materia materia = materiaData.buscarMateria(resultSet.getInt("idMateria"));
+            Alumno alumno = alumnoData.buscarAlumnoPorDni(resultSet.getInt("idAlumno"));
+            inscripcion.setIdInscripto(resultSet.getInt("idInscripto"));
+            inscripcion.setNota(resultSet.getDouble("nota"));
+            inscripcion.setMateria(materia);
+            inscripcion.setAlumno(alumno);
+
+            inscripciones.add(inscripcion);
+            }
+        } catch (SQLException ex) {
+             JOptionPane.showMessageDialog(null, "Error al acceder a  la tabla de inscripciones " + ex.getMessage());
+        }
+        return inscripciones;
 }
+    
+    
+    public List<Inscripcion> obtenerInscripcionesPorAlumno(int id) {
+        conexion = Conexion.getConexion();
+        ArrayList<Inscripcion> inscripciones = new ArrayList<>();
+        String sql = "SELECT idInscripto, idMateria FROM inscripcion WHERE idAlumno = ?";
+        try {
+            PreparedStatement ps = conexion.prepareStatement(sql);
+            ps.setInt(1, id);
+            ResultSet resultSet = ps.executeQuery();
+            while (resultSet.next()) {
+                Inscripcion inscripcion = new Inscripcion();
+                inscripcion.setIdInscripto(resultSet.getInt("idInscripto"));
+                Materia materia = materiaData.buscarMateria(resultSet.getInt("idMateria"));
+                Alumno alumno = alumnoData.buscarAlumnoPorDni(resultSet.getInt("idAlumno"));
+                inscripcion.setMateria(materia);
+                inscripcion.setAlumno(alumno);
+
+                inscripciones.add(inscripcion);
+            }
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al recuperar inscripciones por Id de alumno" + ex.getMessage());
+        }
+        return inscripciones;
+    }
+    
+    public List<Materia> obtenerMateriasCursadas(int id) {
+        conexion = Conexion.getConexion();
+        List<Materia> materiasCursadas = new ArrayList<>();
+        String sql = "SELECT inscripcion.idMateria, materia.nombre, materia.año FROM inscripcion,materia WHERE inscripcion.idMateria=materia.idMateria AND inscripcion.idAlumno = ? AND materia.estado=1";
+
+        try {
+            PreparedStatement ps = conexion.prepareStatement(sql);
+            ps.setInt(1, id);
+            ResultSet resultSet = ps.executeQuery();
+
+            while (resultSet.next()) {
+                Materia materia = new Materia();
+                materia.setIdMateria(resultSet.getInt("idMateria"));
+                materia.setNombre(resultSet.getString("nombre"));
+                materia.setAnioMateria(resultSet.getInt("año"));
+                materiasCursadas.add(materia);
+            }
+            cerrarRecursos(ps, resultSet);
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "No se encontraron materias cursadas " + ex.getMessage());
+        }
+        return materiasCursadas;
+    }
+
+    public List<Materia> obtenerMateriasNoCursadas(int id) {
+        conexion = Conexion.getConexion();
+        ArrayList<Materia> materiasNoCursadas = new ArrayList<>();
+        String sql = "SELECT materia.idMateria, nombre, año FROM materia "
+                + "WHERE materia.idMateria NOT IN (SELECT inscripcion.idMateria FROM inscripcion"
+                + " WHERE inscripcion.idAlumno = ? AND materia.estado=1)";
+        try {
+            PreparedStatement ps = conexion.prepareStatement(sql);
+            ps.setInt(1, id);
+            ResultSet resultSet = ps.executeQuery();
+
+            while (resultSet.next()) {
+                Materia materia = new Materia();
+                materia.setIdMateria(resultSet.getInt("idMateria"));
+                materia.setNombre(resultSet.getString("nombre"));
+                materia.setAnioMateria(resultSet.getInt("año"));
+                materiasNoCursadas.add(materia);
+            }
+            cerrarRecursos(ps, resultSet);
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al obtener materias no cursadas: " + ex.getMessage());
+        }
+        return materiasNoCursadas;
+    }
+
+    public void borrarInscripcionMateriaAlumno(int idAlumno, int idMateria) {
+        conexion = Conexion.getConexion();
+        try {
+            String sql = "DELETE FROM inscripcion WHERE idAlumno = ? AND idMateria = ?";
+            try (PreparedStatement ps = conexion.prepareStatement(sql)) {
+                ps.setInt(1, idAlumno);
+                ps.setInt(2, idMateria);
+
+                ps.executeUpdate();
+            }
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error de conexión no se pudo borrar el registro " + ex.getMessage());
+        }
+    }
+
+    public void actualizarNota(int idAlumno, int idMateria, double nota) {
+        conexion = Conexion.getConexion();
+        try {
+
+            String sql = "UPDATE inscripcion SET nota = ? WHERE idAlumno = ? AND idMateria = ?";
+            PreparedStatement ps = conexion.prepareStatement(sql);
+            {
+                ps.setDouble(1, nota);
+                ps.setInt(2, idAlumno);
+                ps.executeUpdate();
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error no se pudo actualizar el alumno " + ex.getMessage());
+        }
+    }
+
+    public List<Alumno> obtenerAlumnosxMateria(int idMateria) {
+        conexion = Conexion.getConexion();
+        List<Alumno> alumnosInscritos = new ArrayList<>();
+        try {
+
+            String sql = "SELECT alumno.idAlumno, alumno.nombre, alumno.dni, alumno.apellido FROM Alumno JOIN inscripcion ON alumno.idAlumno = inscripcion.idAlumno WHERE inscripcion.idMateria = ? AND alumno.estado=1";
+
+            PreparedStatement ps = conexion.prepareStatement(sql);
+            ps.setInt(1, idMateria);
+
+            ResultSet resultSet = ps.executeQuery();
+
+            while (resultSet.next()) {
+                Alumno alumno = new Alumno();
+                alumno.setIdAlumno(resultSet.getInt("idAlumno"));
+                alumno.setNombre(resultSet.getString("nombre"));
+                alumno.setDni(resultSet.getInt("dni"));
+                alumno.setApellido(resultSet.getString("apellido"));
+                alumnosInscritos.add(alumno);
+            }
+            cerrarRecursos(ps, resultSet);
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error no se pudo obtener la materia del alumno solicitado " + ex.getMessage());// Manejo de excepciones
+        }
+        return alumnosInscritos;
+    }
+
+    private void cerrarRecursos(PreparedStatement ps, ResultSet resultSet) throws SQLException {
+        if (resultSet != null) {
+            resultSet.close();
+        }
+        if (ps != null) {
+            ps.close();
+        }
+    }
+
+    public Object notadeMateria(int idAlumno, int idMateria) {
+        int Nota = 0;
+        try {
+            conexion = Conexion.getConexion();
+            String sql = "SELECT * FROM inscripcion WHERE idAlumno=? AND idMateria=?";
+            PreparedStatement ps = conexion.prepareStatement(sql);
+            ps.setInt(1, idAlumno);
+            ps.setInt(2, idMateria);
+            ResultSet resultSet = ps.executeQuery();
+            while (resultSet.next()) {
+                Nota = resultSet.getInt("nota");
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(InscripcionData.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return (Object) Nota;
+    }
+}    
+    

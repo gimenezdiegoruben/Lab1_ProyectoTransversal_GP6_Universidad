@@ -184,16 +184,16 @@ public class VistaInscripcion extends javax.swing.JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> jComboBox1;
+    public javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JRadioButton jRadioButtonMateriasInscriptas;
-    private javax.swing.JRadioButton jRadioButtonMateriasNoInscriptas;
+    public javax.swing.JRadioButton jRadioButtonMateriasInscriptas;
+    public javax.swing.JRadioButton jRadioButtonMateriasNoInscriptas;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JButton jbtAnularInscripcion;
-    private javax.swing.JButton jbtInscribir;
-    private javax.swing.JButton jbtSalir;
+    public javax.swing.JTable jTable1;
+    public javax.swing.JButton jbtAnularInscripcion;
+    public javax.swing.JButton jbtInscribir;
+    public javax.swing.JButton jbtSalir;
     // End of variables declaration//GEN-END:variables
 }
