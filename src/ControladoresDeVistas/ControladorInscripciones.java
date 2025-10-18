@@ -32,10 +32,6 @@ public class ControladorInscripciones implements ActionListener, ListSelectionLi
     private final App_Menu menu;
     DefaultTableModel modelo = new DefaultTableModel();
 
-    private List<Materia> materiasDisponibles;
-    private List<Materia> materiasInscriptas;
-    private Alumno alumnoSeleccionado;
-
     public ControladorInscripciones(VistaInscripcion vista, AlumnoData alumnoData, InscripcionData inscripcionData, App_Menu menu) {
         this.vista = vista;
         this.alumnoData = alumnoData;
@@ -93,30 +89,8 @@ public class ControladorInscripciones implements ActionListener, ListSelectionLi
         }
 
         if (e.getSource() == vista.jbtInscribir) {
-
-            if (vista.jTable1.getSelectedRow() != -1) {
-
-                Inscripcion inscribir = new Inscripcion();
-                Materia materiasNueva = new Materia();
-                Alumno alumn = new Alumno();
-
-                int filaSelect = vista.jTable1.getSelectedRow();
-                int idMateriaSelect = (int) modelo.getValueAt(filaSelect, 0);
-
-                materiasNueva.setIdMateria(idMateriaSelect);
-                alumn.setIdAlumno(traerID());
-
-                inscribir.setAlumno(alumn);
-                inscribir.setMateria(materiasNueva);
-                inscribir.setNota(0);
-
-                inscripcionData.guardarInscripcion(inscribir);
-                rellenarTabla();
-            } else {
-                JOptionPane.showMessageDialog(null, "El alumno ya está inscrito en esta materia.");
-            }
+            inscribirAlumno();
         }
-
         if (e.getSource() == vista.jbtSalir) {
             vista.dispose();
         }
@@ -163,30 +137,6 @@ public class ControladorInscripciones implements ActionListener, ListSelectionLi
         }
     }
 
-    private void cargarMateriasCursadas() {
-        materiasInscriptas = inscripcionData.obtenerMateriasCursadas(alumnoSeleccionado.getIdAlumno());
-        actualizarTablaConMaterias(materiasInscriptas);
-    }
-
-    private void cargarMateriasNoCursadas() {
-
-        materiasDisponibles = inscripcionData.obtenerMateriasNoCursadas(alumnoSeleccionado.getIdAlumno());
-        actualizarTablaConMaterias(materiasDisponibles);
-
-        List<Materia> materiasDisponibles = inscripcionData.obtenerMateriasNoCursadas(alumnoSeleccionado.getIdAlumno());
-        modelo.setRowCount(0);
-        vista.jTable1.setModel(modelo);
-    }
-
-    private void actualizarTablaConMaterias(List<Materia> materias) {
-        DefaultTableModel modelo = (DefaultTableModel) vista.jTable1.getModel();
-        modelo.setRowCount(0);
-
-        for (Materia materia : materias) {
-            modelo.addRow(new Object[]{materia.getIdMateria(), materia.getNombre(), materia.getAnioMateria()});
-        }
-    }
-
     private void rellenarTabla() {
 
         List<Materia> materias = new ArrayList<Materia>();
@@ -205,7 +155,7 @@ public class ControladorInscripciones implements ActionListener, ListSelectionLi
 
     private int traerID() {
         // Obtenemos el elemento seleccionado, que podría ser null.
-        Object selectedItem = vista.jComboBox1.getSelectedItem(); 
+        Object selectedItem = vista.jComboBox1.getSelectedItem();
 
         if (selectedItem != null) { // <--- VERIFICACIÓN CRÍTICA
             String varTemp = selectedItem.toString(); // Llamamos a toString() solo si no es nulo
@@ -217,31 +167,65 @@ public class ControladorInscripciones implements ActionListener, ListSelectionLi
             } catch (NumberFormatException e) {
                 // Manejar el caso donde el ID no es un número (poco probable si rellenarCombo es correcto)
                 JOptionPane.showMessageDialog(null, "Error al obtener el ID del alumno: " + e.getMessage());
-                return -1; 
+                return -1;
             }
         } else {
             // Si el ítem es nulo, devolvemos un ID inválido (como -1 o 0) para que 
             // los métodos que lo llaman (como rellenarTabla) no intenten acceder a la DB.
-            return -1; 
+            return -1;
         }
     }
 
-    private Materia obtenerMateriaSeleccionada(int fila) {
-        int idMateria = (int) vista.jTable1.getValueAt(fila, 0);
-        return new Materia();
+    private void inscribirAlumno() {
+        int filaSeleccionada = vista.jTable1.getSelectedRow();
+        if (filaSeleccionada != -1) {
+            //Obtener ID y nombre de materia de la tabla
+            int idMateria = (int) vista.jTable1.getValueAt(filaSeleccionada, 0);
+            String nombreMateria = (String) vista.jTable1.getValueAt(filaSeleccionada, 1);
+
+            //Obtener ID y nombre de alumno del combo
+            Object selectedItem = vista.jComboBox1.getSelectedItem();
+            if (selectedItem == null) {
+                JOptionPane.showMessageDialog(null, "No se ha seleccionado un alumno.");
+                return;
+            }
+            String varTemp = selectedItem.toString();
+            String[] partes = varTemp.split("-");
+            int idAlumno = Integer.parseInt(partes[0].trim());
+            String nombreAlumno = partes[2].trim(); //Apellido Nombre
+
+            //Creamos los objetos con datos completos
+            Alumno alumno = new Alumno();
+            alumno.setIdAlumno(idAlumno);
+            alumno.setNombre(nombreAlumno); //nombre p mensaje
+
+            Materia materia = new Materia();
+            materia.setIdMateria(idMateria);
+            materia.setNombre(nombreMateria); //nombre p mensaje
+
+            //Creamos inscripción nota=0 por defecto en alumno nuevo
+            Inscripcion inscripcion = new Inscripcion(0, alumno, materia);
+
+            //Guardamos isncrip en BD
+            inscripcionData.guardarInscripcion(inscripcion);
+        } else {
+            JOptionPane.showMessageDialog(null, "Seleccione una materia para inscribir.");
+        }
+        rellenarTabla();
     }
 
     private void anularInscripcionAlumno() {
         int filaSeleccionada = vista.jTable1.getSelectedRow();
-        if (filaSeleccionada != -1) {
 
-            int filaSelect = vista.jTable1.getSelectedRow();
-            int idMateriaSelect = (int) modelo.getValueAt(filaSelect, 0);
+        if (filaSeleccionada != -1) {
+            int idMateriaSelect = (int) modelo.getValueAt(filaSeleccionada, 0);
             int idAlumno = traerID();
 
             inscripcionData.borrarInscripcionMateriaAlumno(idAlumno, idMateriaSelect);
 
             JOptionPane.showMessageDialog(null, "Inscripción anulada con éxito.");
+        } else {
+            JOptionPane.showMessageDialog(null, "selecciona una inscripción para anularla");
         }
     }
 }

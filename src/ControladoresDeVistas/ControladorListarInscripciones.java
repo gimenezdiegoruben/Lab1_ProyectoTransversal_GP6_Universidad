@@ -19,17 +19,16 @@ import javax.swing.table.DefaultTableModel;
     Tomas Migliozzi Badani
     Urbani Jose
  */
-
 public class ControladorListarInscripciones implements ActionListener {
 
     public MateriaData mdata;
     public InscripcionData idata;
     public VistaListarInscripciones vista;
     public App_Menu menu;
-    
+
     DefaultTableModel modelo = new DefaultTableModel();
 
-    public ControladorListarInscripciones(MateriaData mdata, InscripcionData idata, VistaListarInscripciones vista, App_Menu menu ) {
+    public ControladorListarInscripciones(MateriaData mdata, InscripcionData idata, VistaListarInscripciones vista, App_Menu menu) {
         this.mdata = mdata;
         this.idata = idata;
         this.menu = menu;
@@ -51,6 +50,10 @@ public class ControladorListarInscripciones implements ActionListener {
         modelaTabla();
         vista.jTabla.setEnabled(false);
 
+        if (vista.jcbMateria.getItemCount() > 0) {
+            cargarTablaMateriaSelect(); // carga combo con la primer materia seleccionada
+        }
+        vista.jTabla.setEnabled(false); // deshabilitamos la edición de la tabla ya que solo queremos listar las incripciones
     }
 
     @Override
@@ -58,29 +61,40 @@ public class ControladorListarInscripciones implements ActionListener {
         if (e.getSource() == vista.jbtSalir) {
             vista.dispose();
         }
+
         if (e.getSource() == vista.jcbMateria) { // Actualiza la Tabla con los datos de la consulta de InscripcionData
-            int idMateria = extraerIdMateria();
-            List<Alumno> alumnos = new ArrayList<Alumno>();
+            cargarTablaMateriaSelect(); // método para cargar el combo con materias al iniciar vista
+        }
+    }
+
+    private void cargarTablaMateriaSelect() {
+        int idMateria = extraerIdMateria();
+        List<Alumno> alumnos = new ArrayList<Alumno>();
+
+        modelo.setRowCount(0); // Borra todas las filas de la tabla
+
+        if (idMateria != -1) { // consulta si hay un id valido en la bd primero p obtener alumno
             alumnos = idata.obtenerAlumnosxMateria(idMateria);
-            modelo.setRowCount(0); // Borra todas las filas
-            for (Alumno alumno : alumnos) {
-                modelo.addRow(new Object[]{alumno.getIdAlumno(), alumno.getDni(), alumno.getApellido(), alumno.getNombre()});
-            }
-            vista.jTabla.setModel(modelo);
         }
 
+        for (Alumno alumno : alumnos) {
+            modelo.addRow(new Object[]{alumno.getIdAlumno(), alumno.getDni(), alumno.getApellido(), alumno.getNombre()});
+        }
+        vista.jTabla.setModel(modelo);
     }
 
     private int extraerIdMateria() {
         int idMateria = -1;
         try {
-            String combobox = vista.jcbMateria.getSelectedItem().toString();
-            String partes[] = combobox.split("-");
-            idMateria = Integer.parseInt(partes[0].trim());
+            Object selectedItem = vista.jcbMateria.getSelectedItem(); 
+            if (selectedItem != null) { //para asegurarnos al iniciar si el combo está vacio
+                String combobox = selectedItem.toString();
+                String partes[] = combobox.split("-");
+                idMateria = Integer.parseInt(partes[0].trim());
+            }
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(null, "A ocurrido un error al cargar los indices en el combobox, revices la posicion del idMateria");
         }
-
         return idMateria;
     }
 
@@ -108,7 +122,7 @@ public class ControladorListarInscripciones implements ActionListener {
 
         @Override
         public boolean isCellEditable(int row, int column) {
-            return column == 2; 
-        }
-    }
+            return column == 2;
+        }
+    }
 }

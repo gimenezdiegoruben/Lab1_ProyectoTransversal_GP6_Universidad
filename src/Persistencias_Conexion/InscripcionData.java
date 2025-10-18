@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Persistencias_Conexion;
 
 import Modelos.Alumno;
@@ -17,16 +13,16 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 
-/**
- *
- *  @author Ger
+/*
+    @author Ger
  *  Gimenez Diego Ruben
     Carlos German Mecias Giacomelli
     Tomas Migliozzi Badani
     Urbani Jose
  */
+
 public class InscripcionData {
-    private Connection conexion;
+    private Connection conexion=null;
     private MateriaData materiaData = new MateriaData();
     private AlumnoData alumnoData = new AlumnoData();
     public InscripcionData(){
@@ -201,6 +197,7 @@ public class InscripcionData {
             {
                 ps.setDouble(1, nota);
                 ps.setInt(2, idAlumno);
+                ps.setInt(3, idMateria);
                 ps.executeUpdate();
             }
         } catch (SQLException ex) {
@@ -245,7 +242,7 @@ public class InscripcionData {
     }
 
     public Object notadeMateria(int idAlumno, int idMateria) {
-        int Nota = 0;
+        double Nota = 0.0;
         try {
             conexion = Conexion.getConexion();
             String sql = "SELECT * FROM inscripcion WHERE idAlumno=? AND idMateria=?";
@@ -254,13 +251,14 @@ public class InscripcionData {
             ps.setInt(2, idMateria);
             ResultSet resultSet = ps.executeQuery();
             while (resultSet.next()) {
-                Nota = resultSet.getInt("nota");
+                Nota = resultSet.getDouble("nota");
             }
-
+            resultSet.close();
+            ps.close();
         } catch (SQLException ex) {
             Logger.getLogger(InscripcionData.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return (Object) Nota;
+        return Nota;
     }
 }    
     
